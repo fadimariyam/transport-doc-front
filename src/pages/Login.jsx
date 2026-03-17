@@ -17,7 +17,8 @@ export default function Login() {
   const [password, setPassword] =
     useState("");
 
-  const login = async () => {
+  const login = async (e) => {
+    e.preventDefault();
 
     try {
 
@@ -71,7 +72,12 @@ export default function Login() {
 
         {/* RIGHT */}
 
-        <div className="login-right">
+        {/* <div className="login-right"> */}
+        {/* <div> */}
+        <form
+  className="login-right"
+  onSubmit={login}
+>
 
           <h3>Sign In</h3>
 
@@ -89,12 +95,16 @@ export default function Login() {
               setPassword(e.target.value)
             }
           />
-
+{/* 
           <button onClick={login}>
             Login
-          </button>
+          </button> */}
 
-        </div>
+          <button type="submit">
+  Login
+</button>
+
+       </form>
 
       </div>
 
