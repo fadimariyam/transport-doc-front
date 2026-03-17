@@ -1,0 +1,398 @@
+/* ============================= */
+/* PAGE */
+/* ============================= */
+
+.viewv-page {
+  padding: 25px 30px;
+}
+
+.viewv-title {
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+
+/* ============================= */
+/* GRID LAYOUT */
+/* ============================= */
+
+.viewv-grid {
+  display: grid;
+  grid-template-columns: 2.3fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.viewv-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.viewv-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+/* ============================= */
+/* CARD */
+/* ============================= */
+
+.viewv-card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #d6e1e2;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.viewv-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.viewv-icon {
+  width: 34px;
+  height: 34px;
+  background: #2a8070;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewv-head {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.viewv-add {
+  margin-left: auto;
+  background: #2a8070;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+/* ============================= */
+/* DETAILS */
+/* ============================= */
+
+.viewv-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.viewv-details div {
+  padding: 14px;
+  border-bottom: 1px solid #edf2f2;
+}
+
+.viewv-details span {
+  font-size: 11px;
+  color: #6b7280;
+  display: block;
+}
+
+.viewv-details b {
+  font-weight: 600;
+}
+
+
+/* ============================= */
+/* DOCUMENTS */
+/* ============================= */
+
+.viewv-doc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 14px;
+}
+
+.viewv-doc {
+  border: 1px solid #d6e1e2;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fafcfc;
+}
+
+.viewv-doc-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.viewv-exp {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.viewv-status {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.viewv-status.ok {
+  color: #2a8070;
+}
+
+.viewv-status.soon {
+  color: #e8940a;
+}
+
+.viewv-status.expired {
+  color: #d94f1e;
+}
+
+.viewv-doc-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.viewv-doc-actions button {
+  border: none;
+  background: #e5e7eb;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+/* ============================= */
+/* STATS */
+/* ============================= */
+
+.viewv-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.viewv-stat {
+  padding: 14px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.viewv-stat.s1 {
+  background: #1e6570;
+}
+
+.viewv-stat.s2 {
+  background: #2a8070;
+}
+
+.viewv-stat.s3 {
+  background: #e8940a;
+}
+
+.viewv-stat.s4 {
+  background: #d94f1e;
+}
+
+
+/* ============================= */
+/* QR */
+/* ============================= */
+
+/* ================= QR CARD ================= */
+
+.viewv-qr-box {
+
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+}
+
+.viewv-qr {
+
+  width: 180px;
+  height: 180px;
+
+  border: 2px dashed #cfd8dc;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f8fafb;
+
+  font-weight: bold;
+
+}
+
+
+.viewv-qr-text {
+
+  text-align: center;
+  font-weight: 600;
+  margin-top: 10px;
+
+}
+
+
+.viewv-qr-sub {
+
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 10px;
+
+}
+
+
+/* BUTTONS */
+
+.viewv-qr-actions {
+
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+
+}
+
+
+.qr-btn {
+
+  flex: 1;
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 8px;
+
+  background: #2a8070;
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+.qr-btn:hover {
+
+  background: #1e6570;
+
+  transform: translateY(-2px);
+
+}
+
+.viewv-input {
+  width: 80%;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #cfd8dc;
+  padding: 4px 8px;
+}
+
+.viewv-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.viewv-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #2a8070;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.viewv-btn.cancel {
+  background: gray;
+}
+
+.viewv-btn.save {
+  background: #e8940a;
+}
+
+.viewv-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.viewv-field label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.viewv-doc-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.viewv-doc-actions button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.viewv-details div {
+  padding: 14px;
+  border-bottom: 1px solid #edf2f2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.viewv-status.ok {
+  color: #2a8070;
+}
+
+.viewv-status.soon {
+  color: #e8940a;
+}
+
+.viewv-status.expired {
+  color: #d94f1e;
+}
+
+.viewv-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.viewv-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.viewv-stat span {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.viewv-stat small {
+  font-size: 11px;
+  opacity: 0.8;
+}

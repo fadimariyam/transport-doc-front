@@ -1,0 +1,407 @@
+.add-page {
+  padding: 25px 30px;
+}
+
+.add-card {
+  min-height: 450px;
+  background: white;
+  border-radius: 14px;
+  padding: 25px 30px;
+  margin-top: 15px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #225158;
+  margin-bottom: 18px;
+}
+
+
+/* GRID */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 40px;
+}
+
+
+/* FIELD */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #383b42;
+  margin-inline: 30px;
+  margin-bottom: 8px;
+}
+
+
+/* INPUT */
+
+.form-group input,
+.form-group select {
+  width: 80%;
+  height: 40px;
+
+  border-radius: 15px;
+  border: 1px solid #cfd8dc;
+
+  padding: 0 25px;
+ 
+  margin-bottom: 10px;
+  background: #f7f9fa;
+
+  font-size: 12px;
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2c6a73;
+  background: white;
+}
+
+
+/* TYPE ROW */
+
+.type-row {
+  display: flex;
+  gap: 19px;
+  align-items: center;
+}
+
+.type-row select {
+  flex: 1;
+}
+
+.add-type-btn {
+  width: 48px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: #a6a636;
+  color: white;
+  cursor: pointer;
+}
+
+/* FOOTER */
+
+.card-footer {
+  display: flex;
+  justify-content:flex-end;
+  gap: 10px;
+  margin-top: 80px;
+}
+
+.cancel-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  background: #e5e7eb;
+}
+
+.register-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  background: #1e6570;
+  color: white;
+}
+
+
+/* =========================
+   MODAL FIX
+========================= */
+
+.modal-overlay {
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.35);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+
+.modal-card {
+
+  width: 300px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 20px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+
+}
+
+
+.modal-title {
+
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+.modal-input {
+
+  width: 90%;
+  height: 40px;
+
+  border-radius: 10px;
+
+  border: 1px solid #cfd8dc;
+
+  padding: 0 12px;
+
+  margin-top: 5px;
+}
+
+
+.modal-actions {
+
+  margin-top: 15px;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 10px;
+
+}
+
+
+.btn-cancel {
+
+  padding: 6px 14px;
+
+  border-radius: 8px;
+
+  border: none;
+
+  background: #e5e7eb;
+
+}
+
+
+.btn-save {
+
+  padding: 6px 14px;
+
+  border-radius: 8px;
+
+  border: none;
+
+  background: #e59400;
+
+  color: white;
+
+}
+
+
+.breadcrumb{
+    padding: auto;
+    cursor: pointer;
+}
+
+
+/* date wrapper */
+
+/* make wrapper full width */
+
+.date-picker-wrapper {
+  display: block;
+  width: 100%;
+}
+
+.date-picker-wrapper > div {
+  width: 100%;
+}
+
+.date-picker-wrapper input {
+  width: 100%;
+}
+
+
+/* wrapper */
+
+.date-wrapper {
+  position: relative;
+  width: 80%;
+}
+
+
+/* input */
+
+.date-input {
+  width: 80%;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #cfd8dc;
+  padding: 0 36px 0 12px;
+  background: #f7f9fa;
+}
+
+
+/* icon */
+
+.date-icon {
+  position: absolute;
+  right:250px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1e6570;
+  pointer-events: none;
+  margin-bottom: 15px;
+}
+
+
+/* popup fix */
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+
+/* ---------- CATEGORY RADIO FIX ---------- */
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  height: 92px;
+  padding: 0 6px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 2px;
+  color: #374151;
+}
+
+.radio-item input {
+  width: 3px;
+  height: 3px;
+  cursor: pointer;
+}
+
+
+/* ============================= */
+/* DOCUMENT UPLOAD */
+/* ============================= */
+
+.upload-box {
+  border: 2px dashed #cfd8dc;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  margin-bottom: 20px;
+  background: #f7f9fa;
+}
+
+.upload-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+
+/* DOC LIST */
+
+.doc-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+
+}
+
+
+/* DOC CARD */
+
+.doc-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: white;
+}
+
+.doc-head {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+.doc-row {
+  display:block;
+  gap: 10px;
+  align-items: center;
+}
+
+
+.doc-field {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.doc-field label{
+  margin-right: 35px;
+}
+
+.delete-doc {
+  width: 35px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: #f87171;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+
+.save-doc {
+  width: 100%;
+  margin-top: 10px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: #848617;
+  color: white;
+  cursor: pointer;
+}
+
+
+hr.dashed {
+  border: none;
+  border-top: 3px dashed #9ab356; 
+  height: 4px;
+}
+

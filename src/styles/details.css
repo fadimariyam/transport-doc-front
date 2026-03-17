@@ -1,0 +1,172 @@
+/* ================= VIEW PAGE ONLY ================= */
+
+.view-page {
+  width: 100%;
+  padding: 15px;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.view-page .top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.view-page .breadcrumb {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.view-page .sub {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.view-page .status {
+  background: #2e7d32;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+}
+
+.view-page .top-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+
+/* ---------- BUTTON ---------- */
+
+.view-page .btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.view-page .btn.light {
+  background: #d1d5db;
+}
+
+.view-page .btn.green {
+  background: #16a34a;
+  color: white;
+}
+
+.view-page .btn.dark {
+  background: #1f2937;
+  color: white;
+}
+
+
+/* ---------- LAYOUT ---------- */
+
+.view-page .view-layout {
+  display: flex;
+  gap: 15px;
+}
+
+.view-page .left {
+  flex: 3;
+}
+
+.view-page .right {
+  flex: 1;
+}
+
+
+/* ---------- CARD ---------- */
+
+.view-page .view-card {
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e5e7eb;
+}
+
+.view-page .view-card-header {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+  background: #f8fafc;
+}
+
+
+/* ---------- GRID ---------- */
+
+.view-page .details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 12px;
+}
+
+.view-page label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+
+/* ---------- DOCUMENTS ---------- */
+
+.view-page .doc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.view-page .doc-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f9fafb;
+}
+
+.view-page .doc-type {
+  font-size: 11px;
+  background: #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.view-page .doc-name {
+  font-weight: 600;
+}
+
+.view-page .view-btn {
+  width: 100%;
+  margin-top: 6px;
+  background: #305f72;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+
+/* ---------- QR ---------- */
+
+.view-page .qr-card {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.view-page .qr-box {
+  height: 120px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-page .qr-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}

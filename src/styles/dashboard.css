@@ -1,0 +1,390 @@
+.dashboard-container {
+  padding: 25px 30px;
+  background: #edf2f2;
+  min-height: 100%;
+}
+
+
+/* ================= TITLE ================= */
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+
+
+/* ================= CARDS ================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.dashboard-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 14px;
+
+  color: white;
+
+  font-weight: 600;
+
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.dashboard-card svg {
+  font-size: 26px;
+}
+
+.dashboard-card h2 {
+  margin: 0;
+}
+
+.dashboard-card span {
+  font-size: 13px;
+}
+
+
+/* colors */
+
+.c1 {
+  background: #2c6a73;
+}
+
+.c2 {
+  background: #3a857c;
+}
+
+.c3 {
+  background: #e18b00;
+}
+
+.c4 {
+  background: #d64a1f;
+}
+
+
+
+/* ================= TOOLBAR ================= */
+
+.toolbar {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+}
+
+
+
+/* LEFT */
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* pill */
+
+.pill {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #e4e7e7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill.active {
+  background: #2c6a73;
+  color: white;
+}
+
+
+/* add */
+
+ /* .add-box {
+  position: relative;
+}  */
+
+.add-box {
+  position: relative;
+  display: inline-block;
+}
+
+.add-btn {
+  background: #d17d00;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+
+/* popup */
+
+
+.add-popup {
+
+  position: absolute;
+
+  top: 110%;
+  left: 0;
+
+  width: 200px;
+
+  background: white;
+
+  border-radius: 15px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+  padding: 8px;
+
+  z-index: 999;
+
+}
+
+@keyframes popupFade {
+
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.add-popup div {
+
+  display: flex;
+
+  gap: 10px;
+
+  align-items: center;
+
+  padding: 10px 12px;
+
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  transition: 0.15s;
+
+}
+
+.add-popup div:hover {
+  background: #f3f4f4;
+}
+
+.add-popup span {
+  font-size: 8px;
+  color: gray;
+}
+
+.add-popup::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: -8px;
+  left: 20px;
+
+  width: 14px;
+  height: 14px;
+
+  background: white;
+
+  transform: rotate(45deg);
+
+  box-shadow:
+    -2px -2px 5px rgba(0,0,0,0.05);
+
+}
+
+
+/* ================= RIGHT ================= */
+
+.search-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.search-box {
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: white;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  border: 1px solid #ccc;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+
+.limit {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+
+  background: white;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+/* header */
+
+thead {
+  background: #1f2d36;
+  color: white;
+}
+
+th {
+  padding: 14px;
+  text-align: left;
+}
+
+
+/* rows */
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background: #f6f7f7;
+}
+
+
+
+/* ================= BADGE ================= */
+
+.badge {
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.green {
+  background: #2c6a73;
+  color: white;
+}
+
+.orange {
+  background: #e18b00;
+  color: white;
+}
+
+.red {
+  background: #d64a1f;
+  color: white;
+}
+
+
+
+/* ================= ACTION ================= */
+
+.view-btn {
+
+  border: none;
+
+  background: #e7ebeb;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 18px;
+
+  cursor: pointer;
+}
+
+.view-btn:hover {
+  background: #3fa581;
+}
+
+
+
+/* ================= PAGINATION ================= */
+
+.pagination {
+
+  display: flex;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 15px;
+}
+
+.pagination button {
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: #e5e7e7;
+
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background: #2c6a73;
+  color: white;
+}
