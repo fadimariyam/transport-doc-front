@@ -100,7 +100,8 @@ const loadDocs = async () => {
 
     const res = await axios.get(
       // "http://localhost:5000/api/documents",
-      API + "/dcouments" ,
+      //  `${API}/documents?item_type=vehicle&item_id=${id}`,
+      `${API}/documents`,
       {
         params: {
           item_type: "vehicle",
@@ -250,7 +251,7 @@ const saveVehicle = async () => {
 
     await axios.put(
       // "http://localhost:5000/api/vehicles/" + id,
-      API + "/vehicles/" + id,
+      `${API}/vehicles/${id}`,
       {
         name: form.name,
         type: form.type,
@@ -272,9 +273,12 @@ const saveVehicle = async () => {
         },
       }
     );
+   alert("Vehicle updated ✅");
 
   } catch (err) {
-    console.log(err);
+    console.log(err.response?.data || err);
+    alert("Update failed ❌");
+
   }
 
 };
@@ -296,6 +300,7 @@ d.name + " uploaded"
     }
 
   }
+ alert("Saved successfully ✅");
 
   setEdit(false);
 
@@ -749,7 +754,8 @@ onClick={() => {
   const fileUrl =
     d.url.startsWith("http")
       ? d.url
-      : "http://localhost:5000/" + d.url;
+      // : "http://localhost:5000/" + d.url;
+      : `${API.replace("/api","")}/${d.url}`;
 
   window.open(fileUrl, "_blank");
 

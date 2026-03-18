@@ -85,7 +85,8 @@ const loadDocs = async () => {
 
     const res = await axios.get(
       // "http://localhost:5000/api/documents",
-        API + "/documents" ,
+        // `${API}/documents?item_type=equipment&item_id=${id}`,
+        `${API}/documents`,
       {
         params: {
           item_type: "equipment",
@@ -194,7 +195,7 @@ const uploadDoc = async (doc) => {
 
   await axios.post(
     // "http://localhost:5000/api/documents/upload",
-      API + "/documents/uploads",
+      API + "/documents/upload",
     formData,
     {
       headers: {
@@ -210,13 +211,35 @@ const uploadDoc = async (doc) => {
 
 /* ================= SAVE ================= */
 
+// const saveEquipment = async () => {
+
+//   try {
+
+//     await axios.put(
+//       // "http://localhost:5000/api/equipments/" + id,
+//         API + "/equipments/" + id,
+//       form,
+//       {
+//         headers: {
+//           Authorization:
+//             "Bearer " +
+//             localStorage.getItem("token"),
+//         },
+//       }
+//     );
+
+//   } catch (err) {
+//     console.log(err);
+//   }
+
+// };
+
 const saveEquipment = async () => {
 
   try {
 
     await axios.put(
-      // "http://localhost:5000/api/equipments/" + id,
-        API + "/equipments/" + id,
+      `${API}/equipments/${id}`,
       form,
       {
         headers: {
@@ -227,8 +250,13 @@ const saveEquipment = async () => {
       }
     );
 
+    alert("Updated successfully ✅");
+
   } catch (err) {
-    console.log(err);
+
+    console.log(err.response?.data || err);
+    alert("Update failed ❌");
+
   }
 
 };
@@ -245,7 +273,7 @@ const saveAll = async () => {
     }
 
   }
-
+alert("Saved successfully ✅");
   setEdit(false);
 
   loadEquipment();
@@ -425,20 +453,20 @@ serial:e.target.value
 </div>
 
 <div>
-<span>Handled</span>
+<span>Handled By</span>
 
 {edit ? (
 <input
-value={form.handled || ""}
+value={form.handled_by || ""}
 onChange={(e)=>
 setForm({
 ...form,
-handled:e.target.value
+handled_by:e.target.value
 })
 }
 />
 ) : (
-<b>{form.handled}</b>
+<b>{form.handled_by}</b>
 )}
 
 </div>
@@ -569,13 +597,45 @@ getStatus(d.expiry) === "Valid"
 <div className="viewv-doc-actions">
 
 <button
-onClick={() => window.open(d.url)}
+// onClick={() => window.open(d.url)}
+onClick={() => {
+
+  if (!d.url) {
+    alert("No file");
+    return;
+  }
+
+  const fileUrl =
+    d.url.startsWith("http")
+      ? d.url
+      // : "http://localhost:5000/" + d.url;
+      : `${API.replace("/api","")}/${d.url}`;
+
+  window.open(fileUrl, "_blank");
+
+}}
 >
 <FaEye />
 </button>
 
 <button
-onClick={() => window.open(d.url)}
+// onClick={() => window.open(d.url)}
+onClick={() => {
+
+  if (!d.url) {
+    alert("No file");
+    return;
+  }
+
+  const fileUrl =
+    d.url.startsWith("http")
+      ? d.url
+      // : "http://localhost:5000/" + d.url;
+      : `${API.replace("/api","")}/${d.url}`;
+
+  window.open(fileUrl, "_blank");
+
+}}
 >
 <FaDownload />
 </button>
