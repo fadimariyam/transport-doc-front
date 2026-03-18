@@ -14,6 +14,7 @@ export default function PublicDocuments() {
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [denied, setDenied] = useState(false);
+  const [expired, setExpired] = useState(false);
 
 
 
@@ -36,7 +37,12 @@ const getStatus = (expiry) => {
   return "Valid";
 };
 
-
+/*=========TIME SET============ */
+if (!res.data.allowed && !res.data.denied) {
+  setExpired(true);
+  setLoading(false);
+  return;
+}
 
 /* ================= LOAD ================= */
 
@@ -150,10 +156,28 @@ if (denied) {
 }
 
 
+if (expired) {
+  return (
+    <div className="public-page">
+      <div className="public-card">
+        <h3>Access Expired</h3>
+        <p>Please request access again</p>
+      </div>
+    </div>
+  );
+}
+
 return (
 
 <div className="public-page">
 
+  {/* <div className="watermark">
+  Accessed: {new Date().toLocaleString()}
+</div> */}
+
+<div className="watermark">
+  {text} • {new Date().toLocaleString()}
+</div>
 
   <div className="public-card">
 
