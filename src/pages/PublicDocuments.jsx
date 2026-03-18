@@ -48,7 +48,8 @@ useEffect(() => {
     try {
 
       const res = await axios.get(
-        API + "/scan/check/" + text
+        // API + "/scan/check/" + text
+        `${API}/scan/check/${text}`
       );
 
       // APPROVED
@@ -87,7 +88,8 @@ useEffect(() => {
     try {
 
       const res = await axios.get(
-        API + "/scan/public-docs/" + text
+        // API + "/scan/public-docs/" + text
+        `${API}/scan/public-docs/${text}`
       );
 
       setDocs(res.data);

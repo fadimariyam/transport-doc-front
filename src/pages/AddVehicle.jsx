@@ -138,7 +138,8 @@ const register = async () => {
     /* ================= 1 CREATE VEHICLE ================= */
 
     const vehicleRes = await axios.post(
-      API + "/vehicles",
+      // API + "/vehicles",
+      `${API}/vehicles`,
       {
         name: form.name,
         type: form.type,
@@ -382,9 +383,12 @@ const register = async () => {
                 value={form.type}
                 onChange={change}
               >
+                <option value="">
+    Select Type
+  </option>
 
                 {types.map((t, i) => (
-                  <option key={i}>
+                  <option key={i} value={t}>
                     {t}
                   </option>
                 ))}
@@ -393,6 +397,7 @@ const register = async () => {
 
 
               <button
+              type="button"
                 className="add-type-btn"
                 onClick={() =>
                   setShowModal(true)
