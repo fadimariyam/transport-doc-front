@@ -26,6 +26,7 @@ const API = import.meta.env.VITE_API;
 
 const [edit, setEdit] = useState(false);
 const [docs, setDocs] = useState([]);
+const [newDocs, setNewDocs] = useState([]);
 const [deleteId, setDeleteId] = useState(null);
 const [statFilter, setStatFilter] = useState("all");
 
@@ -115,7 +116,7 @@ const loadDocs = async () => {
       }
     );
 
-    setDocs(res.data);
+    setDocs(res.data || []);
 
   } catch (err) {
     console.log(err);
@@ -152,16 +153,27 @@ else if (oil.current >= nextOil - 500)
 
 const addDoc = () => {
 
-  setDocs([
-    ...docs,
-    {
-      id: Date.now(),
-      name: "",
-      expiry: "",
-      status: "Valid",
-      file: null,
-    },
-  ]);
+  // setDocs([
+  //   ...docs,
+  //   {
+  //     id: Date.now(),
+  //     name: "",
+  //     expiry: "",
+  //     status: "Valid",
+  //     file: null,
+  //   },
+  // ]);
+ 
+  setNewDocs([
+  ...newDocs,
+  {
+    id: Date.now(),
+    name: "",
+    expiry: "",
+    file: null,
+  },
+]);
+  
 
 };
 
@@ -303,6 +315,8 @@ d.name + " uploaded"
  alert("Saved successfully ✅");
 
   setEdit(false);
+  
+  setNewDocs([]);
 
   loadVehicle();
   loadDocs();
@@ -312,14 +326,25 @@ d.name + " uploaded"
 
 /* ================= FILTER ================= */
 
+// const filteredDocs =
+//   statFilter === "all"
+//     ? docs
+//     : docs.filter(
+//         d =>
+//           getStatus(d.expiry)
+//             .toLowerCase() ===
+//           statFilter
+//       );
+
+const allDocs = [...docs, ...newDocs];
+
 const filteredDocs =
   statFilter === "all"
-    ? docs
-    : docs.filter(
+    ? allDocs
+    : allDocs.filter(
         d =>
           getStatus(d.expiry)
-            .toLowerCase() ===
-          statFilter
+            .toLowerCase() === statFilter
       );
 
 
@@ -816,9 +841,21 @@ onClick={async () => {
 
 <button
 className="viewv-del"
-onClick={() =>
-setDeleteId(d.id)
-}
+// onClick={() =>
+// setDeleteId(d.id)
+// }
+onClick={() => {
+
+  if (!d.url) {
+    // new doc → remove locally
+    setNewDocs(newDocs.filter(x => x.id !== d.id));
+    return;
+  }
+
+  setDeleteId(d.id);
+
+}}
+
 >
 ❌
 </button>

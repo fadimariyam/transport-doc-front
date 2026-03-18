@@ -24,6 +24,7 @@ const API = import.meta.env.VITE_API;
 
 const [edit, setEdit] = useState(false);
 const [docs, setDocs] = useState([]);
+const [newDocs, setNewDocs] = useState([]);  
 const [deleteId, setDeleteId] = useState(null);
 const [statFilter, setStatFilter] = useState("all");
 
@@ -100,7 +101,7 @@ const loadDocs = async () => {
       }
     );
 
-    setDocs(res.data);
+    setDocs(res.data||[]);
 
   } catch (err) {
     console.log(err);
@@ -121,10 +122,24 @@ useEffect(() => {
 
 /* ================= ADD DOC ================= */
 
+// const addDoc = () => {
+
+//   setDocs([
+//     ...docs,
+//     {
+//       id: Date.now(),
+//       name: "",
+//       expiry: "",
+//       file: null,
+//     },
+//   ]);
+
+// };
+
 const addDoc = () => {
 
-  setDocs([
-    ...docs,
+  setNewDocs([
+    ...newDocs,
     {
       id: Date.now(),
       name: "",
@@ -134,7 +149,6 @@ const addDoc = () => {
   ]);
 
 };
-
 
 /* ================= CHANGE DOC ================= */
 
@@ -156,11 +170,14 @@ const changeDoc = (id, field, value) => {
 const confirmDelete = async () => {
 
   try {
+ 
+    if (!deleteId) return;
 
     await axios.delete(
       // "http://localhost:5000/api/documents/" +
-        API + "/documents/" +
-        deleteId,
+        // API + "/documents/" +
+        // deleteId,
+        `${API}/documents/${deleteId}`,
       {
         headers: {
           Authorization:
@@ -175,7 +192,8 @@ const confirmDelete = async () => {
     loadDocs();
 
   } catch (err) {
-    console.log(err);
+    console.log(err.response?.data || err);
+    alert("Delete failed ❌");
   }
 
 };
@@ -262,19 +280,41 @@ const saveEquipment = async () => {
 };
 
 
+// const saveAll = async () => {
+
+//   await saveEquipment();
+
+//   for (let d of docs) {
+
+//     if (d.file) {
+//       await uploadDoc(d);
+//     }
+
+//   }
+// alert("Saved successfully ✅");
+//   setEdit(false);
+
+//   loadEquipment();
+//   loadDocs();
+
+// };
+
 const saveAll = async () => {
 
   await saveEquipment();
 
-  for (let d of docs) {
-
+  // upload ONLY new docs
+  for (let d of newDocs) {
     if (d.file) {
       await uploadDoc(d);
     }
-
   }
-alert("Saved successfully ✅");
+
+  alert("Saved successfully ✅");
+
   setEdit(false);
+
+  setNewDocs([]); // clear temp docs
 
   loadEquipment();
   loadDocs();
@@ -284,10 +324,12 @@ alert("Saved successfully ✅");
 
 /* ================= FILTER ================= */
 
+const allDocs = [...docs, ...newDocs];
+
 const filteredDocs =
   statFilter === "all"
-    ? docs
-    : docs.filter(
+    ? allDocs
+    : allDocs.filter(
         d =>
           getStatus(d.expiry)
             .toLowerCase() ===
@@ -643,9 +685,49 @@ onClick={() => {
 {edit && (
 
 <button
-onClick={() =>
-setDeleteId(d.id)
-}
+// onClick={() =>
+// setDeleteId(d.id)
+// }
+onClick={async () => {
+
+  if (!d.url) {
+    alert("No file");
+    return;
+  }
+
+  try {
+
+    const fileUrl =
+      d.url.startsWith("http")
+        ? d.url
+        : `${API.replace("/api","")}/${d.url}`;
+
+    const res = await fetch(fileUrl);
+    const blob = await res.blob();
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = d.name || "file";
+
+    document.body.appendChild(link);
+    link.click();
+
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+
+    console.log(err);
+    alert("Download failed ❌");
+
+  }
+
+}}
+
 >
 ❌
 </button>
