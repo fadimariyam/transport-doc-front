@@ -815,11 +815,10 @@
 import "../styles/viewPage.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   FaDownload,
-  FaPrint,
   FaEye,
   FaFile,
   FaCheckCircle,
@@ -831,16 +830,15 @@ import ConfirmModal from "../components/ConfirmModal";
 
 export default function ViewEquipment() {
 
+const nav = useNavigate();
 const { id } = useParams();
 const API = import.meta.env.VITE_API;
 
 /* ================= STATE ================= */
 
 const [edit, setEdit] = useState(false);
-
 const [docs, setDocs] = useState([]);
 const [newDocs, setNewDocs] = useState([]);
-
 const [deleteId, setDeleteId] = useState(null);
 const [statFilter, setStatFilter] = useState("all");
 
@@ -863,7 +861,6 @@ const getStatus = (expiry) => {
   if (diff < 30) return "Soon";
 
   return "Valid";
-
 };
 
 /* ================= LOAD EQUIPMENT ================= */
@@ -871,7 +868,7 @@ const getStatus = (expiry) => {
 const loadEquipment = async () => {
 
   const res = await axios.get(
-    `${API}/equipments/${id}`,
+    API + "/equipments/" + id,
     {
       headers: {
         Authorization:
@@ -909,12 +906,10 @@ const loadDocs = async () => {
 };
 
 useEffect(() => {
-
   if (id) {
     loadEquipment();
     loadDocs();
   }
-
 }, [id]);
 
 /* ================= ADD DOC ================= */
@@ -937,13 +932,21 @@ const addDoc = () => {
 
 const changeDoc = (id, field, value) => {
 
-  setDocs(docs.map(d =>
-    d.id === id ? { ...d, [field]: value } : d
-  ));
+  setDocs(
+    docs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
 
-  setNewDocs(newDocs.map(d =>
-    d.id === id ? { ...d, [field]: value } : d
-  ));
+  setNewDocs(
+    newDocs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
 
 };
 
@@ -1011,12 +1014,16 @@ const saveEquipment = async () => {
 
 };
 
+/* ================= SAVE ALL ================= */
+
 const saveAll = async () => {
 
   await saveEquipment();
 
   for (let d of newDocs) {
-    if (d.file) await uploadDoc(d);
+    if (d.file) {
+      await uploadDoc(d);
+    }
   }
 
   setNewDocs([]);
@@ -1058,13 +1065,19 @@ const filteredDocs =
 const totalDocs = allDocs.length;
 
 const validDocs =
-  allDocs.filter(d => getStatus(d.expiry) === "Valid").length;
+  allDocs.filter(
+    d => getStatus(d.expiry) === "Valid"
+  ).length;
 
 const soonDocs =
-  allDocs.filter(d => getStatus(d.expiry) === "Soon").length;
+  allDocs.filter(
+    d => getStatus(d.expiry) === "Soon"
+  ).length;
 
 const expiredDocs =
-  allDocs.filter(d => getStatus(d.expiry) === "Expired").length;
+  allDocs.filter(
+    d => getStatus(d.expiry) === "Expired"
+  ).length;
 
 if (!form) return null;
 
@@ -1074,26 +1087,36 @@ return (
 
 <div className="viewv-page">
 
-{/* TITLE */}
 <div className="viewv-title-row">
 
-<h2 className="viewv-title">{form.name}</h2>
+<h2 className="viewv-title">
+{form.name}
+</h2>
 
 <div className="viewv-actions">
 
 {!edit && (
-<button className="viewv-btn" onClick={() => setEdit(true)}>
+<button
+className="viewv-btn"
+onClick={() => setEdit(true)}
+>
 Edit
 </button>
 )}
 
 {edit && (
 <>
-<button className="viewv-btn cancel" onClick={() => setEdit(false)}>
+<button
+className="viewv-btn cancel"
+onClick={() => setEdit(false)}
+>
 Cancel
 </button>
 
-<button className="viewv-btn save" onClick={saveAll}>
+<button
+className="viewv-btn save"
+onClick={saveAll}
+>
 Save
 </button>
 </>
@@ -1113,7 +1136,9 @@ Save
 
 <div className="viewv-card-header">
 <div className="viewv-icon">🏗️</div>
-<div className="viewv-head">EQUIPMENT DETAILS</div>
+<div className="viewv-head">
+EQUIPMENT DETAILS
+</div>
 </div>
 
 <div className="viewv-details">
@@ -1126,40 +1151,66 @@ Save
 <div>
 <span>Name</span>
 {edit ? (
-<input value={form.name||""} onChange={e=>setForm({...form,name:e.target.value})}/>
-) : <b>{form.name}</b>}
+<input
+value={form.name || ""}
+onChange={(e)=>
+setForm({...form,name:e.target.value})
+}
+/>
+) : (
+<b>{form.name}</b>
+)}
 </div>
 
 <div>
 <span>Type</span>
 {edit ? (
-<input value={form.type||""} onChange={e=>setForm({...form,type:e.target.value})}/>
-) : <b>{form.type}</b>}
+<input
+value={form.type || ""}
+onChange={(e)=>
+setForm({...form,type:e.target.value})
+}
+/>
+) : (
+<b>{form.type}</b>
+)}
 </div>
 
 <div>
 <span>Serial</span>
 {edit ? (
-<input value={form.serial||""} onChange={e=>setForm({...form,serial:e.target.value})}/>
-) : <b>{form.serial}</b>}
+<input
+value={form.serial || ""}
+onChange={(e)=>
+setForm({...form,serial:e.target.value})
+}
+/>
+) : (
+<b>{form.serial}</b>
+)}
 </div>
 
 <div>
 <span>Handled By</span>
 {edit ? (
-<input value={form.handled_by||""} onChange={e=>setForm({...form,handled_by:e.target.value})}/>
-) : <b>{form.handled_by}</b>}
+<input
+value={form.handled_by || ""}
+onChange={(e)=>
+setForm({...form,handled_by:e.target.value})
+}
+/>
+) : (
+<b>{form.handled_by}</b>
+)}
 </div>
 
 <div>
 <span>Warranty</span>
-{edit ? (
-<input type="date" value={form.warranty?.slice(0,10)||""}
-onChange={e=>setForm({...form,warranty:e.target.value})}/>
-) : <b>{form.warranty?.slice(0,10)}</b>}
+<b>{form.warranty?.slice(0,10)}</b>
 </div>
 
 </div>
+
 </div>
 
 {/* DOCUMENTS */}
@@ -1167,18 +1218,24 @@ onChange={e=>setForm({...form,warranty:e.target.value})}/>
 
 <div className="viewv-card-header">
 <div className="viewv-icon">📄</div>
-<div className="viewv-head">DOCUMENTS</div>
+<div className="viewv-head">
+DOCUMENTS
+</div>
 
 {edit && (
-<button className="viewv-add" onClick={addDoc}>
+<button
+className="viewv-add"
+onClick={addDoc}
+>
 + ADD
 </button>
 )}
+
 </div>
 
 <div className="viewv-doc-grid">
 
-{filteredDocs.map(d=>{
+{filteredDocs.map((d) => {
 
 const fileUrl = getFileUrl(d.url);
 
@@ -1186,36 +1243,76 @@ return (
 
 <div key={d.id} className="viewv-doc">
 
-<input value={d.name} disabled={!edit}
-onChange={e=>changeDoc(d.id,"name",e.target.value)} />
-
-<input type="date" value={d.expiry?.slice(0,10)}
+<div className="viewv-field">
+<label>Name</label>
+<input
+className="viewv-input"
+value={d.name}
 disabled={!edit}
-onChange={e=>changeDoc(d.id,"expiry",e.target.value)} />
+onChange={(e)=>
+changeDoc(d.id,"name",e.target.value)
+}
+/>
+</div>
+
+<div className="viewv-field">
+<label>Expiry</label>
+<input
+type="date"
+className="viewv-input"
+value={d.expiry?.slice(0,10)}
+disabled={!edit}
+onChange={(e)=>
+changeDoc(d.id,"expiry",e.target.value)
+}
+/>
+</div>
 
 {edit && (
-<input type="file"
-onChange={e=>changeDoc(d.id,"file",e.target.files[0])}/>
+<div className="viewv-field">
+<label>Upload</label>
+<input
+type="file"
+onChange={(e)=>
+changeDoc(d.id,"file",e.target.files[0])
+}
+/>
+</div>
 )}
+
+<div className={
+"viewv-status " +
+(
+getStatus(d.expiry) === "Valid"
+? "ok"
+: getStatus(d.expiry) === "Soon"
+? "soon"
+: "expired"
+)
+}>
+{getStatus(d.expiry)}
+</div>
 
 <div className="viewv-doc-actions">
 
 <button onClick={()=>fileUrl && window.open(fileUrl)}>
-<FaEye/>
+<FaEye />
 </button>
 
 <button onClick={()=>fileUrl && window.open(fileUrl)}>
-<FaDownload/>
+<FaDownload />
 </button>
 
 {edit && (
-<button onClick={()=>{
+<button
+onClick={()=>{
 if(!d.url){
 setNewDocs(newDocs.filter(x=>x.id!==d.id));
 }else{
 setDeleteId(d.id);
 }
-}}>
+}}
+>
 ❌
 </button>
 )}
@@ -1239,10 +1336,27 @@ setDeleteId(d.id);
 
 {/* STATS */}
 <div className="viewv-stats">
-<div onClick={()=>setStatFilter("all")}><FaFile/>{totalDocs}</div>
-<div onClick={()=>setStatFilter("valid")}><FaCheckCircle/>{validDocs}</div>
-<div onClick={()=>setStatFilter("soon")}><FaClock/>{soonDocs}</div>
-<div onClick={()=>setStatFilter("expired")}><FaExclamationTriangle/>{expiredDocs}</div>
+
+<div className="viewv-stat s1" onClick={()=>setStatFilter("all")}>
+<FaFile />
+<span>{totalDocs}<small>Total</small></span>
+</div>
+
+<div className="viewv-stat s2" onClick={()=>setStatFilter("valid")}>
+<FaCheckCircle />
+<span>{validDocs}<small>Valid</small></span>
+</div>
+
+<div className="viewv-stat s3" onClick={()=>setStatFilter("soon")}>
+<FaClock />
+<span>{soonDocs}<small>Soon</small></span>
+</div>
+
+<div className="viewv-stat s4" onClick={()=>setStatFilter("expired")}>
+<FaExclamationTriangle />
+<span>{expiredDocs}<small>Expired</small></span>
+</div>
+
 </div>
 
 {/* QR */}
@@ -1250,46 +1364,20 @@ setDeleteId(d.id);
 
 <div className="viewv-card-header">
 <div className="viewv-icon">🔳</div>
-<div className="viewv-head">QR CODE</div>
+<div className="viewv-head">
+QR CODE
+</div>
 </div>
 
 <div className="viewv-qr-box">
-
 <img
 className="viewv-qr"
 src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
 />
-
 </div>
 
 <div className="viewv-qr-text">
 {form.equipment_id} — {form.name}
-</div>
-
-<div className="viewv-qr-actions">
-
-<button onClick={async ()=>{
-const url=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
-const res=await fetch(url);
-const blob=await res.blob();
-const blobUrl=URL.createObjectURL(blob);
-
-const a=document.createElement("a");
-a.href=blobUrl;
-a.download=form.equipment_id+".png";
-a.click();
-}}>
-<FaDownload/> Download
-</button>
-
-<button onClick={()=>{
-const url=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
-const win=window.open("");
-win.document.write(`<img src="${url}" onload="window.print();window.close()" />`);
-}}>
-<FaPrint/> Print
-</button>
-
 </div>
 
 </div>

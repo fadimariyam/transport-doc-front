@@ -1061,12 +1061,13 @@
 import "../styles/viewPage.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   FaDownload,
   FaPrint,
   FaEye,
+  FaTrash,
   FaFile,
   FaCheckCircle,
   FaClock,
@@ -1077,16 +1078,15 @@ import ConfirmModal from "../components/ConfirmModal";
 
 export default function ViewVehicle() {
 
+const nav = useNavigate();
 const { id } = useParams();
 const API = import.meta.env.VITE_API;
 
 /* ================= STATE ================= */
 
 const [edit, setEdit] = useState(false);
-
 const [docs, setDocs] = useState([]);
 const [newDocs, setNewDocs] = useState([]);
-
 const [deleteId, setDeleteId] = useState(null);
 const [statFilter, setStatFilter] = useState("all");
 
@@ -1101,21 +1101,17 @@ const [oil, setOil] = useState({
 /* ================= STATUS ================= */
 
 const getStatus = (expiry) => {
-
   if (!expiry) return "Valid";
 
   const today = new Date();
   const exp = new Date(expiry);
 
-  const diff =
-    (exp - today) /
-    (1000 * 60 * 60 * 24);
+  const diff = (exp - today) / (1000 * 60 * 60 * 24);
 
   if (diff < 0) return "Expired";
   if (diff < 30) return "Soon";
 
   return "Valid";
-
 };
 
 /* ================= LOAD VEHICLE ================= */
@@ -1123,7 +1119,7 @@ const getStatus = (expiry) => {
 const loadVehicle = async () => {
 
   const res = await axios.get(
-    `${API}/vehicles/${id}`,
+    API + "/vehicles/" + id,
     {
       headers: {
         Authorization:
@@ -1137,12 +1133,14 @@ const loadVehicle = async () => {
 
   setForm(v);
 
+  const interval =
+    (v.next_oil || 0) -
+    (v.last_oil || 0);
+
   setOil({
     current: v.current_km || 0,
     last: v.last_oil || 0,
-    interval:
-      (v.next_oil || 0) -
-      (v.last_oil || 0),
+    interval: interval || 0,
   });
 
 };
@@ -1171,12 +1169,10 @@ const loadDocs = async () => {
 };
 
 useEffect(() => {
-
   if (id) {
     loadVehicle();
     loadDocs();
   }
-
 }, [id]);
 
 /* ================= OIL ================= */
@@ -1212,13 +1208,21 @@ const addDoc = () => {
 
 const changeDoc = (id, field, value) => {
 
-  setDocs(docs.map(d =>
-    d.id === id ? { ...d, [field]: value } : d
-  ));
+  setDocs(
+    docs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
 
-  setNewDocs(newDocs.map(d =>
-    d.id === id ? { ...d, [field]: value } : d
-  ));
+  setNewDocs(
+    newDocs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
 
 };
 
@@ -1227,7 +1231,7 @@ const changeDoc = (id, field, value) => {
 const confirmDelete = async () => {
 
   await axios.delete(
-    `${API}/documents/${deleteId}`,
+    API + "/documents/" + deleteId,
     {
       headers: {
         Authorization:
@@ -1255,7 +1259,7 @@ const uploadDoc = async (doc) => {
   fd.append("expiry", doc.expiry);
 
   await axios.post(
-    `${API}/documents/upload`,
+    API + "/documents/upload",
     fd,
     {
       headers: {
@@ -1303,7 +1307,9 @@ const saveAll = async () => {
   await saveVehicle();
 
   for (let d of newDocs) {
-    if (d.file) await uploadDoc(d);
+    if (d.file) {
+      await uploadDoc(d);
+    }
   }
 
   setNewDocs([]);
@@ -1336,7 +1342,8 @@ const filteredDocs =
     ? allDocs
     : allDocs.filter(
         d =>
-          getStatus(d.expiry).toLowerCase() === statFilter
+          getStatus(d.expiry)
+            .toLowerCase() === statFilter
       );
 
 /* ================= STATS ================= */
@@ -1344,13 +1351,19 @@ const filteredDocs =
 const totalDocs = allDocs.length;
 
 const validDocs =
-  allDocs.filter(d => getStatus(d.expiry) === "Valid").length;
+  allDocs.filter(
+    d => getStatus(d.expiry) === "Valid"
+  ).length;
 
 const soonDocs =
-  allDocs.filter(d => getStatus(d.expiry) === "Soon").length;
+  allDocs.filter(
+    d => getStatus(d.expiry) === "Soon"
+  ).length;
 
 const expiredDocs =
-  allDocs.filter(d => getStatus(d.expiry) === "Expired").length;
+  allDocs.filter(
+    d => getStatus(d.expiry) === "Expired"
+  ).length;
 
 if (!form) return null;
 
@@ -1396,7 +1409,6 @@ Save
 
 {/* VEHICLE DETAILS */}
 <div className="viewv-card">
-
 <div className="viewv-card-header">
 <div className="viewv-icon">🚚</div>
 <div className="viewv-head">VEHICLE DETAILS</div>
@@ -1404,78 +1416,52 @@ Save
 
 <div className="viewv-details">
 
-<div><span>ID</span><b>{form.vehicle_id}</b></div>
+<div><span>VEHICLE ID</span><b>{form.vehicle_id}</b></div>
 
-<div>
-<span>Brand</span>
-{edit ? (
-<input value={form.brand||""} onChange={e=>setForm({...form,brand:e.target.value})}/>
-) : <b>{form.brand}</b>}
+<div><span>BRAND</span>
+{edit ? <input value={form.brand||""} onChange={e=>setForm({...form,brand:e.target.value})}/> : <b>{form.brand||"-"}</b>}
 </div>
 
-<div>
-<span>Name</span>
-{edit ? (
-<input value={form.name||""} onChange={e=>setForm({...form,name:e.target.value})}/>
-) : <b>{form.name}</b>}
+<div><span>VEHICLE NAME</span>
+{edit ? <input value={form.name||""} onChange={e=>setForm({...form,name:e.target.value})}/> : <b>{form.name||"-"}</b>}
 </div>
 
-<div>
-<span>Plate</span>
-{edit ? (
-<input value={form.plate||""} onChange={e=>setForm({...form,plate:e.target.value})}/>
-) : <b>{form.plate}</b>}
+<div><span>PLATE</span>
+{edit ? <input value={form.plate||""} onChange={e=>setForm({...form,plate:e.target.value})}/> : <b>{form.plate||"-"}</b>}
 </div>
 
-<div>
-<span>Owner</span>
-{edit ? (
-<input value={form.owner||""} onChange={e=>setForm({...form,owner:e.target.value})}/>
-) : <b>{form.owner}</b>}
+<div><span>OWNER</span>
+{edit ? <input value={form.owner||""} onChange={e=>setForm({...form,owner:e.target.value})}/> : <b>{form.owner||"-"}</b>}
 </div>
 
-<div>
-<span>Category</span>
+<div><span>CATEGORY</span>
 {edit ? (
 <select value={form.category||"Fixed"} onChange={e=>setForm({...form,category:e.target.value})}>
 <option value="Fixed">Fixed</option>
 <option value="Common">Common</option>
 </select>
-) : <b>{form.category}</b>}
+) : <b>{form.category||"-"}</b>}
 </div>
 
-<div>
-<span>Type</span>
-{edit ? (
-<input value={form.type||""} onChange={e=>setForm({...form,type:e.target.value})}/>
-) : <b>{form.type}</b>}
+<div><span>TYPE</span>
+{edit ? <input value={form.type||""} onChange={e=>setForm({...form,type:e.target.value})}/> : <b>{form.type||"-"}</b>}
 </div>
 
-<div>
-<span>Current KM</span>
-{edit ? (
-<input value={oil.current} onChange={e=>setOil({...oil,current:e.target.value})}/>
-) : <b>{oil.current}</b>}
+<div><span>CURRENT KM</span>
+{edit ? <input value={oil.current} onChange={e=>setOil({...oil,current:e.target.value})}/> : <b>{oil.current}</b>}
 </div>
 
-<div>
-<span>Last Oil</span>
-{edit ? (
-<input value={oil.last} onChange={e=>setOil({...oil,last:e.target.value})}/>
-) : <b>{oil.last}</b>}
+<div><span>LAST OIL KM</span>
+{edit ? <input value={oil.last} onChange={e=>setOil({...oil,last:e.target.value})}/> : <b>{oil.last}</b>}
 </div>
 
-<div>
-<span>Interval</span>
-{edit ? (
-<input value={oil.interval} onChange={e=>setOil({...oil,interval:e.target.value})}/>
-) : <b>{oil.interval}</b>}
+<div><span>INTERVAL</span>
+{edit ? <input value={oil.interval} onChange={e=>setOil({...oil,interval:e.target.value})}/> : <b>{oil.interval}</b>}
 </div>
 
-<div><span>Next Oil</span><b>{nextOil}</b></div>
+<div><span>NEXT OIL KM</span><b>{nextOil}</b></div>
 
-<div>
-<span>Status</span>
+<div><span>OIL STATUS</span>
 <b className={oilStatus==="Normal"?"viewv-status ok":oilStatus==="Soon"?"viewv-status soon":"viewv-status expired"}>
 {oilStatus}
 </b>
@@ -1486,21 +1472,16 @@ Save
 
 {/* DOCUMENTS */}
 <div className="viewv-card">
-
 <div className="viewv-card-header">
 <div className="viewv-icon">📄</div>
 <div className="viewv-head">DOCUMENTS</div>
 
-{edit && (
-<button className="viewv-add" onClick={addDoc}>
-+ ADD
-</button>
-)}
+{edit && <button className="viewv-add" onClick={addDoc}>+ ADD</button>}
 </div>
 
 <div className="viewv-doc-grid">
 
-{filteredDocs.map(d=>{
+{filteredDocs.map((d) => {
 
 const fileUrl = getFileUrl(d.url);
 
@@ -1508,17 +1489,31 @@ return (
 
 <div key={d.id} className="viewv-doc">
 
-<input value={d.name} disabled={!edit}
+<div className="viewv-field">
+<label>Document Name</label>
+<input className="viewv-input" value={d.name} disabled={!edit}
 onChange={e=>changeDoc(d.id,"name",e.target.value)} />
+</div>
 
-<input type="date" value={d.expiry?.slice(0,10)}
+<div className="viewv-field">
+<label>Expiry</label>
+<input type="date" className="viewv-input"
+value={d.expiry?.slice(0,10)}
 disabled={!edit}
 onChange={e=>changeDoc(d.id,"expiry",e.target.value)} />
+</div>
 
 {edit && (
-<input type="file"
-onChange={e=>changeDoc(d.id,"file",e.target.files[0])}/>
+<div className="viewv-field">
+<label>Upload</label>
+<input type="file" onChange={e=>changeDoc(d.id,"file",e.target.files[0])}/>
+</div>
 )}
+
+<div className={"viewv-status " +
+(getStatus(d.expiry)==="Valid"?"ok":getStatus(d.expiry)==="Soon"?"soon":"expired")}>
+{getStatus(d.expiry)}
+</div>
 
 <div className="viewv-doc-actions">
 
@@ -1531,7 +1526,7 @@ onChange={e=>changeDoc(d.id,"file",e.target.files[0])}/>
 </button>
 
 {edit && (
-<button onClick={()=>{
+<button className="viewv-del" onClick={()=>{
 if(!d.url){
 setNewDocs(newDocs.filter(x=>x.id!==d.id));
 }else{
@@ -1558,14 +1553,11 @@ setDeleteId(d.id);
 {/* RIGHT */}
 <div className="viewv-right">
 
-{/* STATS */}
 <div className="viewv-stats">
-
-<div onClick={()=>setStatFilter("all")}><FaFile/>{totalDocs}</div>
-<div onClick={()=>setStatFilter("valid")}><FaCheckCircle/>{validDocs}</div>
-<div onClick={()=>setStatFilter("soon")}><FaClock/>{soonDocs}</div>
-<div onClick={()=>setStatFilter("expired")}><FaExclamationTriangle/>{expiredDocs}</div>
-
+<div className="viewv-stat s1" onClick={()=>setStatFilter("all")}><FaFile/><span>{totalDocs}<small>Total</small></span></div>
+<div className="viewv-stat s2" onClick={()=>setStatFilter("valid")}><FaCheckCircle/><span>{validDocs}<small>Valid</small></span></div>
+<div className="viewv-stat s3" onClick={()=>setStatFilter("soon")}><FaClock/><span>{soonDocs}<small>Soon</small></span></div>
+<div className="viewv-stat s4" onClick={()=>setStatFilter("expired")}><FaExclamationTriangle/><span>{expiredDocs}<small>Expired</small></span></div>
 </div>
 
 {/* QR */}
@@ -1577,22 +1569,21 @@ setDeleteId(d.id);
 </div>
 
 <div className="viewv-qr-box">
-
-<img
-className="viewv-qr"
-src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
-/>
-
+<img className="viewv-qr"
+src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}/>
 </div>
 
 <div className="viewv-qr-text">
 {form.vehicle_id} — {form.name}
 </div>
 
+<div className="viewv-qr-sub">
+Permanent QR • Does not change on edit
+</div>
+
 <div className="viewv-qr-actions">
 
-<button
-onClick={async ()=>{
+<button className="qr-btn" onClick={async()=>{
 const url=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
 const res=await fetch(url);
 const blob=await res.blob();
@@ -1602,18 +1593,15 @@ const a=document.createElement("a");
 a.href=blobUrl;
 a.download=form.vehicle_id+".png";
 a.click();
-}}
->
+}}>
 <FaDownload/> Download
 </button>
 
-<button
-onClick={()=>{
+<button className="qr-btn" onClick={()=>{
 const url=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
 const win=window.open("");
 win.document.write(`<img src="${url}" onload="window.print();window.close()" />`);
-}}
->
+}}>
 <FaPrint/> Print
 </button>
 
