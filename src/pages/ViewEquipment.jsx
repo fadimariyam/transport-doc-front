@@ -952,7 +952,6 @@ const getFileUrl = (url) => {
     return url;
 
   const base =
-    // import.meta.env.VITE_API.replace("/api", "");
     (API || "").replace("/api", "")
 
   return base + "/" + url.replace(/^\/+/, "");
@@ -1562,9 +1561,16 @@ QR CODE
 
 <div className="viewv-qr-box">
 
-<img
+{/* <img
 className="viewv-qr"
 src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
+/> */}
+
+<img
+className="viewv-qr"
+src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${
+window.location.origin + "/scan/" + form.qr.split("scan/")[1]
+}`}
 />
 
 </div>
