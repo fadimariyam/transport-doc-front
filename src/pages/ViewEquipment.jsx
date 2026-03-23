@@ -1,813 +1,813 @@
-// import "../styles/viewPage.css";
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useParams, useNavigate } from "react-router-dom";
+import "../styles/viewPage.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
-// import {
-//   FaDownload,
-//   FaPrint,
-//   FaEye,
-//   FaFile,
-//   FaCheckCircle,
-//   FaClock,
-//   FaExclamationTriangle,
-// } from "react-icons/fa";
+import {
+  FaDownload,
+  FaPrint,
+  FaEye,
+  FaFile,
+  FaCheckCircle,
+  FaClock,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 
-// import ConfirmModal from "../components/ConfirmModal";
+import ConfirmModal from "../components/ConfirmModal";
 
-// export default function ViewEquipment() {
+export default function ViewEquipment() {
 
-// const nav = useNavigate();
-// const { id } = useParams();
-// const API = import.meta.env.VITE_API;
-// /* ================= STATE ================= */
+const nav = useNavigate();
+const { id } = useParams();
+const API = import.meta.env.VITE_API;
+/* ================= STATE ================= */
 
-// const [edit, setEdit] = useState(false);
-// const [docs, setDocs] = useState([]);
-// const [newDocs, setNewDocs] = useState([]);  
-// const [deleteId, setDeleteId] = useState(null);
-// const [statFilter, setStatFilter] = useState("all");
+const [edit, setEdit] = useState(false);
+const [docs, setDocs] = useState([]);
+const [newDocs, setNewDocs] = useState([]);  
+const [deleteId, setDeleteId] = useState(null);
+const [statFilter, setStatFilter] = useState("all");
 
-// const [form, setForm] = useState(null);
-
-
-// /* ================= STATUS ================= */
-
-// const getStatus = (expiry) => {
-
-//   if (!expiry) return "Valid";
-
-//   const today = new Date();
-//   const exp = new Date(expiry);
-
-//   const diff =
-//     (exp - today) /
-//     (1000 * 60 * 60 * 24);
-
-//   if (diff < 0) return "Expired";
-//   if (diff < 30) return "Soon";
-
-//   return "Valid";
-// };
+const [form, setForm] = useState(null);
 
 
-// /* ================= LOAD EQUIPMENT ================= */
+/* ================= STATUS ================= */
 
-// const loadEquipment = async () => {
+const getStatus = (expiry) => {
 
-//   try {
+  if (!expiry) return "Valid";
 
-//     const res = await axios.get(
-//        API + "/equipments/" + id,
-//       {
-//         headers: {
-//           Authorization:
-//             "Bearer " +
-//             localStorage.getItem("token"),
-//         },
-//       }
-//     );
+  const today = new Date();
+  const exp = new Date(expiry);
 
-//     setForm(res.data);
+  const diff =
+    (exp - today) /
+    (1000 * 60 * 60 * 24);
 
-//   } catch (err) {
-//     console.log(err);
-//   }
+  if (diff < 0) return "Expired";
+  if (diff < 30) return "Soon";
 
-// };
+  return "Valid";
+};
 
 
-// /* ================= LOAD DOCS ================= */
+/* ================= LOAD EQUIPMENT ================= */
 
-// const loadDocs = async () => {
+const loadEquipment = async () => {
 
-//   try {
+  try {
 
-//     const res = await axios.get(
-//         `${API}/documents`,
-//       {
-//         params: {
-//           item_type: "equipment",
-//           item_id: id,
-//         },
-//         headers: {
-//           Authorization:
-//             "Bearer " +
-//             localStorage.getItem("token"),
-//         },
-//       }
-//     );
+    const res = await axios.get(
+       API + "/equipments/" + id,
+      {
+        headers: {
+          Authorization:
+            "Bearer " +
+            localStorage.getItem("token"),
+        },
+      }
+    );
 
-//     setDocs(res.data||[]);
+    setForm(res.data);
 
-//   } catch (err) {
-//     console.log(err);
-//   }
+  } catch (err) {
+    console.log(err);
+  }
 
-// };
+};
 
 
-// useEffect(() => {
+/* ================= LOAD DOCS ================= */
 
-//   if (id) {
-//     loadEquipment();
-//     loadDocs();
-//   }
+const loadDocs = async () => {
 
-// }, [id]);
+  try {
 
+    const res = await axios.get(
+        `${API}/documents`,
+      {
+        params: {
+          item_type: "equipment",
+          item_id: id,
+        },
+        headers: {
+          Authorization:
+            "Bearer " +
+            localStorage.getItem("token"),
+        },
+      }
+    );
 
-// /* ================= ADD DOC ================= */
+    setDocs(res.data||[]);
 
-// const addDoc = () => {
+  } catch (err) {
+    console.log(err);
+  }
 
-//   setNewDocs([
-//     ...newDocs,
-//     {
-//       id: Date.now(),
-//       name: "",
-//       expiry: "",
-//       file: null,
-//     },
-//   ]);
-
-// };
-
-// /* ================= CHANGE DOC ================= */
-
-// const changeDoc = (id, field, value) => {
-
-//   setDocs(
-//     docs.map(d =>
-//       d.id === id
-//         ? { ...d, [field]: value }
-//         : d
-//     )
-//   );
-
-// };
+};
 
 
-// /* ================= DELETE ================= */
+useEffect(() => {
 
-// const confirmDelete = async () => {
+  if (id) {
+    loadEquipment();
+    loadDocs();
+  }
 
-//   try {
+}, [id]);
+
+
+/* ================= ADD DOC ================= */
+
+const addDoc = () => {
+
+  setNewDocs([
+    ...newDocs,
+    {
+      id: Date.now(),
+      name: "",
+      expiry: "",
+      file: null,
+    },
+  ]);
+
+};
+
+/* ================= CHANGE DOC ================= */
+
+const changeDoc = (id, field, value) => {
+
+  setDocs(
+    docs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
+
+};
+
+
+/* ================= DELETE ================= */
+
+const confirmDelete = async () => {
+
+  try {
  
-//     if (!deleteId) return;
+    if (!deleteId) return;
 
-//     await axios.delete(
+    await axios.delete(
     
-//         `${API}/documents/${deleteId}`,
-//       {
-//         headers: {
-//           Authorization:
-//             "Bearer " +
-//             localStorage.getItem("token"),
-//         },
-//       }
-//     );
+        `${API}/documents/${deleteId}`,
+      {
+        headers: {
+          Authorization:
+            "Bearer " +
+            localStorage.getItem("token"),
+        },
+      }
+    );
 
-//     setDeleteId(null);
+    setDeleteId(null);
 
-//     loadDocs();
+    loadDocs();
 
-//   } catch (err) {
-//     console.log(err.response?.data || err);
-//     alert("Delete failed ❌");
-//   }
+  } catch (err) {
+    console.log(err.response?.data || err);
+    alert("Delete failed ❌");
+  }
 
-// };
+};
 
 
-// /* ================= UPLOAD ================= */
+/* ================= UPLOAD ================= */
 
-// const uploadDoc = async (doc) => {
+const uploadDoc = async (doc) => {
 
-//   const formData = new FormData();
+  const formData = new FormData();
 
-//   formData.append("file", doc.file);
-//   formData.append("item_type", "equipment");
-//   formData.append("item_id", id);
-//   formData.append("name", doc.name);
-//   formData.append("expiry", doc.expiry);
+  formData.append("file", doc.file);
+  formData.append("item_type", "equipment");
+  formData.append("item_id", id);
+  formData.append("name", doc.name);
+  formData.append("expiry", doc.expiry);
 
-//   await axios.post(
-//       API + "/documents/upload",
-//     formData,
-//     {
-//       headers: {
-//         Authorization:
-//           "Bearer " +
-//           localStorage.getItem("token"),
-//       },
-//     }
-//   );
+  await axios.post(
+      API + "/documents/upload",
+    formData,
+    {
+      headers: {
+        Authorization:
+          "Bearer " +
+          localStorage.getItem("token"),
+      },
+    }
+  );
 
-// };
+};
 
 
-// /* ================= SAVE ================= */
+/* ================= SAVE ================= */
 
-// const saveEquipment = async () => {
+const saveEquipment = async () => {
 
-//   try {
+  try {
 
-//     await axios.put(
-//       `${API}/equipments/${id}`,
-//       form,
-//       {
-//         headers: {
-//           Authorization:
-//             "Bearer " +
-//             localStorage.getItem("token"),
-//         },
-//       }
-//     );
+    await axios.put(
+      `${API}/equipments/${id}`,
+      form,
+      {
+        headers: {
+          Authorization:
+            "Bearer " +
+            localStorage.getItem("token"),
+        },
+      }
+    );
 
-//     alert("Updated successfully ✅");
+    alert("Updated successfully ✅");
 
-//   } catch (err) {
+  } catch (err) {
 
-//     console.log(err.response?.data || err);
-//     alert("Update failed ❌");
+    console.log(err.response?.data || err);
+    alert("Update failed ❌");
 
-//   }
+  }
 
-// };
+};
 
 
 
-// const saveAll = async () => {
+const saveAll = async () => {
 
-//   await saveEquipment();
+  await saveEquipment();
 
-//   // upload ONLY new docs
-//   for (let d of newDocs) {
-//     if (d.file) {
-//       await uploadDoc(d);
-//     }
-//   }
+  // upload ONLY new docs
+  for (let d of newDocs) {
+    if (d.file) {
+      await uploadDoc(d);
+    }
+  }
 
-//   alert("Saved successfully ✅");
+  alert("Saved successfully ✅");
 
-//   setEdit(false);
+  setEdit(false);
 
-//   setNewDocs([]); // clear temp docs
+  setNewDocs([]); // clear temp docs
 
-//   loadEquipment();
-//   loadDocs();
+  loadEquipment();
+  loadDocs();
 
-// };
+};
 
 
-// /* ================= FILTER ================= */
+/* ================= FILTER ================= */
 
-// const allDocs = [...docs, ...newDocs];
+const allDocs = [...docs, ...newDocs];
 
-// const filteredDocs =
-//   statFilter === "all"
-//     ? allDocs
-//     : allDocs.filter(
-//         d =>
-//           getStatus(d.expiry)
-//             .toLowerCase() ===
-//           statFilter
-//       );
+const filteredDocs =
+  statFilter === "all"
+    ? allDocs
+    : allDocs.filter(
+        d =>
+          getStatus(d.expiry)
+            .toLowerCase() ===
+          statFilter
+      );
 
 
-// if (!form) return null;
+if (!form) return null;
 
 
-// /* ================= STATS ================= */
+/* ================= STATS ================= */
 
-// const totalDocs = docs.length;
+const totalDocs = docs.length;
 
-// const validDocs =
-//   docs.filter(
-//     d => getStatus(d.expiry) === "Valid"
-//   ).length;
+const validDocs =
+  docs.filter(
+    d => getStatus(d.expiry) === "Valid"
+  ).length;
 
-// const soonDocs =
-//   docs.filter(
-//     d => getStatus(d.expiry) === "Soon"
-//   ).length;
+const soonDocs =
+  docs.filter(
+    d => getStatus(d.expiry) === "Soon"
+  ).length;
 
-// const expiredDocs =
-//   docs.filter(
-//     d => getStatus(d.expiry) === "Expired"
-//   ).length;
+const expiredDocs =
+  docs.filter(
+    d => getStatus(d.expiry) === "Expired"
+  ).length;
 
 
-// /* ================= UI ================= */
+/* ================= UI ================= */
 
-// return (
+return (
 
-// <div className="viewv-page">
+<div className="viewv-page">
 
-// <div className="viewv-title-row">
+<div className="viewv-title-row">
 
-// <h2 className="viewv-title">
-// {form.name}
-// </h2>
+<h2 className="viewv-title">
+{form.name}
+</h2>
 
-// <div className="viewv-actions">
+<div className="viewv-actions">
 
-// {!edit && (
-// <button
-// className="viewv-btn"
-// onClick={() => setEdit(true)}
-// >
-// Edit
-// </button>
-// )}
+{!edit && (
+<button
+className="viewv-btn"
+onClick={() => setEdit(true)}
+>
+Edit
+</button>
+)}
 
-// {edit && (
-// <>
-// <button
-// className="viewv-btn cancel"
-// onClick={() => setEdit(false)}
-// >
-// Cancel
-// </button>
+{edit && (
+<>
+<button
+className="viewv-btn cancel"
+onClick={() => setEdit(false)}
+>
+Cancel
+</button>
 
-// <button
-// className="viewv-btn save"
-// onClick={saveAll}
-// >
-// Save
-// </button>
-// </>
-// )}
+<button
+className="viewv-btn save"
+onClick={saveAll}
+>
+Save
+</button>
+</>
+)}
 
-// </div>
+</div>
 
-// </div>
+</div>
 
 
 
-// <div className="viewv-grid">
+<div className="viewv-grid">
 
 
-// {/* LEFT */}
+{/* LEFT */}
 
-// <div className="viewv-left">
+<div className="viewv-left">
 
 
-// {/* DETAILS */}
+{/* DETAILS */}
 
-// <div className="viewv-card">
+<div className="viewv-card">
 
-// <div className="viewv-card-header">
+<div className="viewv-card-header">
 
-// <div className="viewv-icon">🏗️</div>
+<div className="viewv-icon">🏗️</div>
 
-// <div className="viewv-head">
-// EQUIPMENT DETAILS
-// </div>
+<div className="viewv-head">
+EQUIPMENT DETAILS
+</div>
 
-// </div>
+</div>
 
 
-// <div className="viewv-details">
+<div className="viewv-details">
 
-// <div>
-// <span>ID</span>
-// <b>{form.equipment_id}</b>
-// </div>
+<div>
+<span>ID</span>
+<b>{form.equipment_id}</b>
+</div>
 
-// <div>
-// <span>Name</span>
+<div>
+<span>Name</span>
 
-// {edit ? (
-// <input
-// value={form.name || ""}
-// onChange={(e)=>
-// setForm({
-// ...form,
-// name:e.target.value
-// })
-// }
-// />
-// ) : (
-// <b>{form.name}</b>
-// )}
+{edit ? (
+<input
+value={form.name || ""}
+onChange={(e)=>
+setForm({
+...form,
+name:e.target.value
+})
+}
+/>
+) : (
+<b>{form.name}</b>
+)}
 
-// </div>
+</div>
 
-// <div>
-// <span>Type</span>
+<div>
+<span>Type</span>
 
-// {edit ? (
-// <input
-// value={form.type || ""}
-// onChange={(e)=>
-// setForm({
-// ...form,
-// type:e.target.value
-// })
-// }
-// />
-// ) : (
-// <b>{form.type}</b>
-// )}
+{edit ? (
+<input
+value={form.type || ""}
+onChange={(e)=>
+setForm({
+...form,
+type:e.target.value
+})
+}
+/>
+) : (
+<b>{form.type}</b>
+)}
 
-// </div>
+</div>
 
-// <div>
-// <span>Serial</span>
+<div>
+<span>Serial</span>
 
-// {edit ? (
-// <input
-// value={form.serial || ""}
-// onChange={(e)=>
-// setForm({
-// ...form,
-// serial:e.target.value
-// })
-// }
-// />
-// ) : (
-// <b>{form.serial}</b>
-// )}
+{edit ? (
+<input
+value={form.serial || ""}
+onChange={(e)=>
+setForm({
+...form,
+serial:e.target.value
+})
+}
+/>
+) : (
+<b>{form.serial}</b>
+)}
 
-// </div>
+</div>
 
-// <div>
-// <span>Handled By</span>
+<div>
+<span>Handled By</span>
 
-// {edit ? (
-// <input
-// value={form.handled_by || ""}
-// onChange={(e)=>
-// setForm({
-// ...form,
-// handled_by:e.target.value
-// })
-// }
-// />
-// ) : (
-// <b>{form.handled_by}</b>
-// )}
+{edit ? (
+<input
+value={form.handled_by || ""}
+onChange={(e)=>
+setForm({
+...form,
+handled_by:e.target.value
+})
+}
+/>
+) : (
+<b>{form.handled_by}</b>
+)}
 
-// </div>
+</div>
 
-// <div>
-// <span>Warranty</span>
-// <b>{form.warranty?.slice(0,10)}</b>
-// </div>
+<div>
+<span>Warranty</span>
+<b>{form.warranty?.slice(0,10)}</b>
+</div>
 
-// </div>
+</div>
 
-// </div>
+</div>
 
 
 
-// {/* DOCUMENTS */}
+{/* DOCUMENTS */}
 
-// <div className="viewv-card">
+<div className="viewv-card">
 
-// <div className="viewv-card-header">
+<div className="viewv-card-header">
 
-// <div className="viewv-icon">📄</div>
+<div className="viewv-icon">📄</div>
 
-// <div className="viewv-head">
-// DOCUMENTS
-// </div>
+<div className="viewv-head">
+DOCUMENTS
+</div>
 
-// {edit && (
-// <button
-// className="viewv-add"
-// onClick={addDoc}
-// >
-// + ADD
-// </button>
-// )}
+{edit && (
+<button
+className="viewv-add"
+onClick={addDoc}
+>
++ ADD
+</button>
+)}
 
-// </div>
+</div>
 
 
-// <div className="viewv-doc-grid">
+<div className="viewv-doc-grid">
 
-// {filteredDocs.map((d) => (
+{filteredDocs.map((d) => (
 
-// <div
-// key={d.id}
-// className="viewv-doc"
-// >
+<div
+key={d.id}
+className="viewv-doc"
+>
 
-// <div className="viewv-field">
+<div className="viewv-field">
 
-// <label>Name</label>
+<label>Name</label>
 
-// <input
-// className="viewv-input"
-// value={d.name}
-// disabled={!edit}
-// onChange={(e)=>
-// changeDoc(
-// d.id,
-// "name",
-// e.target.value
-// )
-// }
-// />
+<input
+className="viewv-input"
+value={d.name}
+disabled={!edit}
+onChange={(e)=>
+changeDoc(
+d.id,
+"name",
+e.target.value
+)
+}
+/>
 
-// </div>
+</div>
 
 
-// <div className="viewv-field">
+<div className="viewv-field">
 
-// <label>Expiry</label>
+<label>Expiry</label>
 
-// <input
-// type="date"
-// className="viewv-input"
-// value={d.expiry?.slice(0,10)}
-// disabled={!edit}
-// onChange={(e)=>
-// changeDoc(
-// d.id,
-// "expiry",
-// e.target.value
-// )
-// }
-// />
+<input
+type="date"
+className="viewv-input"
+value={d.expiry?.slice(0,10)}
+disabled={!edit}
+onChange={(e)=>
+changeDoc(
+d.id,
+"expiry",
+e.target.value
+)
+}
+/>
 
-// </div>
+</div>
 
 
-// {edit && (
+{edit && (
 
-// <div className="viewv-field">
+<div className="viewv-field">
 
-// <label>Upload</label>
+<label>Upload</label>
 
-// <input
-// type="file"
-// onChange={(e)=>
-// changeDoc(
-// d.id,
-// "file",
-// e.target.files[0]
-// )
-// }
-// />
+<input
+type="file"
+onChange={(e)=>
+changeDoc(
+d.id,
+"file",
+e.target.files[0]
+)
+}
+/>
 
-// </div>
+</div>
 
-// )}
+)}
 
 
-// <div
-// className={
-// "viewv-status " +
-// (
-// getStatus(d.expiry) === "Valid"
-// ? "ok"
-// : getStatus(d.expiry) === "Soon"
-// ? "soon"
-// : "expired"
-// )
-// }
-// >
-// {getStatus(d.expiry)}
-// </div>
+<div
+className={
+"viewv-status " +
+(
+getStatus(d.expiry) === "Valid"
+? "ok"
+: getStatus(d.expiry) === "Soon"
+? "soon"
+: "expired"
+)
+}
+>
+{getStatus(d.expiry)}
+</div>
 
 
-// <div className="viewv-doc-actions">
+<div className="viewv-doc-actions">
 
-// <button
-// onClick={() => {
+<button
+onClick={() => {
 
-//   if (!d.url) {
-//     alert("No file");
-//     return;
-//   }
+  if (!d.url) {
+    alert("No file");
+    return;
+  }
 
-//   const fileUrl =
-//     d.url.startsWith("http")
-//       ? d.url
-//       : `${API.replace("/api","")}/${d.url}`;
+  const fileUrl =
+    d.url.startsWith("http")
+      ? d.url
+      : `${API.replace("/api","")}/${d.url}`;
 
-//   window.open(fileUrl, "_blank");
+  window.open(fileUrl, "_blank");
 
-// }}
-// >
-// <FaEye />
-// </button>
+}}
+>
+<FaEye />
+</button>
 
-// <button
-// onClick={() => {
+<button
+onClick={() => {
 
-//   if (!d.url) {
-//     alert("No file");
-//     return;
-//   }
+  if (!d.url) {
+    alert("No file");
+    return;
+  }
 
-//   const fileUrl =
-//     d.url.startsWith("http")
-//       ? d.url
-//       : `${API.replace("/api","")}/${d.url}`;
+  const fileUrl =
+    d.url.startsWith("http")
+      ? d.url
+      : `${API.replace("/api","")}/${d.url}`;
 
-//   window.open(fileUrl, "_blank");
+  window.open(fileUrl, "_blank");
 
-// }}
-// >
-// <FaDownload />
-// </button>
+}}
+>
+<FaDownload />
+</button>
 
-// {edit && (
+{edit && (
 
-// <button
-// onClick={async () => {
+<button
+onClick={async () => {
 
-//   if (!d.url) {
-//     alert("No file");
-//     return;
-//   }
+  if (!d.url) {
+    alert("No file");
+    return;
+  }
 
-//   try {
+  try {
 
-//     const fileUrl =
-//       d.url.startsWith("http")
-//         ? d.url
-//         : `${API.replace("/api","")}/${d.url}`;
+    const fileUrl =
+      d.url.startsWith("http")
+        ? d.url
+        : `${API.replace("/api","")}/${d.url}`;
 
-//     const res = await fetch(fileUrl);
-//     const blob = await res.blob();
+    const res = await fetch(fileUrl);
+    const blob = await res.blob();
 
-//     const url = window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(blob);
 
-//     const link = document.createElement("a");
+    const link = document.createElement("a");
 
-//     link.href = url;
-//     link.download = d.name || "file";
+    link.href = url;
+    link.download = d.name || "file";
 
-//     document.body.appendChild(link);
-//     link.click();
+    document.body.appendChild(link);
+    link.click();
 
-//     link.remove();
+    link.remove();
 
-//     window.URL.revokeObjectURL(url);
+    window.URL.revokeObjectURL(url);
 
-//   } catch (err) {
+  } catch (err) {
 
-//     console.log(err);
-//     alert("Download failed ❌");
+    console.log(err);
+    alert("Download failed ❌");
 
-//   }
+  }
 
-// }}
+}}
 
-// >
-// ❌
-// </button>
+>
+❌
+</button>
 
-// )}
+)}
 
-// </div>
+</div>
 
-// </div>
+</div>
 
-// ))}
+))}
 
-// </div>
+</div>
 
-// </div>
+</div>
 
-// </div>
+</div>
 
 
-// {/* RIGHT */}
+{/* RIGHT */}
 
-// <div className="viewv-right">
+<div className="viewv-right">
 
 
-// {/* STATS */}
+{/* STATS */}
 
-// <div className="viewv-stats">
+<div className="viewv-stats">
 
-// <div
-// className="viewv-stat s1"
-// onClick={() =>
-// setStatFilter("all")
-// }
-// >
-// <FaFile />
-// <span>
-// {totalDocs}
-// <small>Total</small>
-// </span>
-// </div>
+<div
+className="viewv-stat s1"
+onClick={() =>
+setStatFilter("all")
+}
+>
+<FaFile />
+<span>
+{totalDocs}
+<small>Total</small>
+</span>
+</div>
 
 
-// <div
-// className="viewv-stat s2"
-// onClick={() =>
-// setStatFilter("valid")
-// }
-// >
-// <FaCheckCircle />
-// <span>
-// {validDocs}
-// <small>Valid</small>
-// </span>
-// </div>
+<div
+className="viewv-stat s2"
+onClick={() =>
+setStatFilter("valid")
+}
+>
+<FaCheckCircle />
+<span>
+{validDocs}
+<small>Valid</small>
+</span>
+</div>
 
 
-// <div
-// className="viewv-stat s3"
-// onClick={() =>
-// setStatFilter("soon")
-// }
-// >
-// <FaClock />
-// <span>
-// {soonDocs}
-// <small>Soon</small>
-// </span>
-// </div>
+<div
+className="viewv-stat s3"
+onClick={() =>
+setStatFilter("soon")
+}
+>
+<FaClock />
+<span>
+{soonDocs}
+<small>Soon</small>
+</span>
+</div>
 
 
-// <div
-// className="viewv-stat s4"
-// onClick={() =>
-// setStatFilter("expired")
-// }
-// >
-// <FaExclamationTriangle />
-// <span>
-// {expiredDocs}
-// <small>Expired</small>
-// </span>
-// </div>
+<div
+className="viewv-stat s4"
+onClick={() =>
+setStatFilter("expired")
+}
+>
+<FaExclamationTriangle />
+<span>
+{expiredDocs}
+<small>Expired</small>
+</span>
+</div>
 
-// </div>
+</div>
 
 
-// {/* QR */}
+{/* QR */}
 
-// <div className="viewv-card">
+<div className="viewv-card">
 
-// <div className="viewv-card-header">
+<div className="viewv-card-header">
 
-// <div className="viewv-icon">🔳</div>
+<div className="viewv-icon">🔳</div>
 
-// <div className="viewv-head">
-// QR CODE
-// </div>
+<div className="viewv-head">
+QR CODE
+</div>
 
-// </div>
+</div>
 
 
-// <div className="viewv-qr-box">
+<div className="viewv-qr-box">
 
-// {form.qr ? (
+{form.qr ? (
 
-// <img
-// className="viewv-qr"
-// src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
-// />
+<img
+className="viewv-qr"
+src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
+/>
 
-// ) : (
+) : (
 
-// <div className="viewv-qr">
-// QR
-// </div>
+<div className="viewv-qr">
+QR
+</div>
 
-// )}
+)}
 
-// </div>
+</div>
 
 
-// <div className="viewv-qr-text">
-// {form.equipment_id} — {form.name}
-// </div>
+<div className="viewv-qr-text">
+{form.equipment_id} — {form.name}
+</div>
 
 
-// </div>
+</div>
 
-// </div>
+</div>
 
 
-// </div>
+</div>
 
 
-// {deleteId && (
+{deleteId && (
 
-// <ConfirmModal
-// text="Delete this document?"
-// onCancel={() =>
-// setDeleteId(null)
-// }
-// onConfirm={confirmDelete}
-// />
+<ConfirmModal
+text="Delete this document?"
+onCancel={() =>
+setDeleteId(null)
+}
+onConfirm={confirmDelete}
+/>
 
-// )}
+)}
 
-// </div>
+</div>
 
-// );
+);
 
-// }
+}
