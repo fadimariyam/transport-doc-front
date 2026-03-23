@@ -23,7 +23,9 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
-  const API = import.meta.env.VITE_API;
+  const API = import.meta.env.VITE_API || "";
+
+
   const token = localStorage.getItem("token");
 
   const [open, setOpen] = useState(false);

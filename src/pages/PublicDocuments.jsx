@@ -9,7 +9,21 @@ export default function PublicDocuments() {
 
   const { text } = useParams();
 
-  const API = import.meta.env.VITE_API;
+  const API = import.meta.env.VITE_API || "";
+
+  const getFileUrl = (url) => {
+
+  if (!url) return null;
+
+  if (url.startsWith("http"))
+    return url;
+
+  const base =
+    (API || "").replace("/api", "");
+
+  return base + "/" + url;
+
+};
 
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,11 +52,11 @@ const getStatus = (expiry) => {
 };
 
 /*=========TIME SET============ */
-if (!res.data.allowed && !res.data.denied) {
-  setExpired(true);
-  setLoading(false);
-  return;
-}
+// if (!res.data.allowed && !res.data.denied) {
+//   setExpired(true);
+//   setLoading(false);
+//   return;
+// }
 
 /* ================= LOAD ================= */
 
@@ -66,6 +80,14 @@ useEffect(() => {
 
         return;
       }
+
+      if (!res.data.allowed && !res.data.denied) {
+
+  setExpired(true);
+  setLoading(false);
+  return;
+
+}
 
       // DENIED
 
@@ -249,10 +271,15 @@ return (
 
           {/* PREVIEW */}
 
-          {d.url?.endsWith(".pdf") ? (
+          {/* {d.url?.endsWith(".pdf") ? ( */}
+
+          const fileUrl = getFileUrl(d.url);
+
+          {fileUrl?.endsWith(".pdf") ? (
 
             <iframe
-              src={d.url}
+              // src={d.url}
+              src={fileUrl}
               width="100%"
               height="300"
             />
@@ -260,7 +287,8 @@ return (
           ) : (
 
             <img
-              src={d.url}
+              // src={d.url}
+              src={fileUrl}
               className="public-img"
             />
 
