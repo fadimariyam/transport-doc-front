@@ -901,7 +901,7 @@ onClick={async () => {
 </button> */}
 
 <button
-onClick={() => {
+onClick={async () => {
 
   const fileUrl = getFileUrl(d.url);
 
@@ -910,14 +910,36 @@ onClick={() => {
     return;
   }
 
-  const a = document.createElement("a");
+  try {
 
-  a.href = fileUrl;
-  a.download = d.name || "file";
+    const res = await fetch(fileUrl);
 
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+    const blob = await res.blob();
+
+    const url =
+      window.URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+    link.download =
+      d.name || "file";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+
+    console.log(err);
+    alert("Download failed");
+
+  }
 
 }}
 >
