@@ -51,12 +51,6 @@ const getStatus = (expiry) => {
   return "Valid";
 };
 
-/*=========TIME SET============ */
-// if (!res.data.allowed && !res.data.denied) {
-//   setExpired(true);
-//   setLoading(false);
-//   return;
-// }
 
 /* ================= LOAD ================= */
 
@@ -193,10 +187,6 @@ return (
 
 <div className="public-page">
 
-  {/* <div className="watermark">
-  Accessed: {new Date().toLocaleString()}
-</div> */}
-
 <div className="watermark">
   {text} • {new Date().toLocaleString()}
 </div>
@@ -224,67 +214,6 @@ return (
 
     )}
 
-
-{/* 
-    {docs.map((d) => {
-
-      const status =
-        getStatus(d.expiry);
-
-      return (
-
-        <div
-          key={d.id}
-          className="public-doc"
-        >
-
-          <div className="public-doc-head">
-
-            <b>{d.name}</b>
-
-            <span
-              className={
-                "status " +
-                status.toLowerCase()
-              }
-            >
-              {status}
-            </span>
-
-          </div>
-
-          <div className="public-expiry">
-
-            Expiry:
-            {d.expiry?.slice(0, 10)}
-
-          </div>
-
-          const fileUrl = getFileUrl(d.url);
-
-          {fileUrl?.endsWith(".pdf") ? (
-
-            <iframe
-              src={fileUrl}
-              width="100%"
-              height="300"
-            />
-
-          ) : (
-
-            <img
-              src={fileUrl}
-              className="public-img"
-            />
-
-          )}
-
-
-        </div>
-
-      );
-
-    })} */}
 
     {docs.map((d) => {
 
