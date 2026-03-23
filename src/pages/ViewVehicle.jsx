@@ -412,11 +412,15 @@ const getFileUrl = (url) => {
     return url;
   }
 
-  const base =
-    // import.meta.env.VITE_API.replace("/api", "");
-    (API || "").replace("/api", "")
+  // const base =
+  //   import.meta.env.VITE_API.replace("/api", "");
 
-  return base + "/" + url.replace(/^\/+/, "");
+  // return base + "/" + url.replace(/^\/+/, "");
+
+  const base =
+  (API || "").replace("/api", "");
+
+return base + "/" + url;
 
 };
 
@@ -450,7 +454,16 @@ Edit
 <>
 <button
 className="viewv-btn cancel"
-onClick={() => setEdit(false)}
+// onClick={() => setEdit(false)}
+onClick={async () => {
+
+  setEdit(false);
+  setNewDocs([]);
+
+  await loadVehicle();
+  await loadDocs();
+
+}}
 >
 Cancel
 </button>
@@ -900,8 +913,7 @@ onClick={() => {
   const a = document.createElement("a");
 
   a.href = fileUrl;
-  a.download = "";
-  a.target = "_blank";
+  a.download = d.name || "file";
 
   document.body.appendChild(a);
   a.click();
@@ -911,7 +923,6 @@ onClick={() => {
 >
 <FaDownload />
 </button>
-
 
 {edit && (
 
