@@ -9,6 +9,11 @@ import axios from "axios";
 export default function OTPPage() {
 
   const { text } = useParams();
+  const rawText = text;
+
+const cleanText = text.includes("scan/")
+  ? text.split("scan/")[1]
+  : text;
 
   const nav = useNavigate();
 
@@ -33,7 +38,7 @@ const sendRequest = async () => {
     await axios.post(
       API + "/scan/request",
       {
-        qr_text: text,
+        qr_text: cleanText,
         name,
         email,
         phone,

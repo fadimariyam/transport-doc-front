@@ -190,32 +190,6 @@ const changeDoc = (id, field, value) => {
 
 /* ================= DELETE ================= */
 
-// const confirmDelete = async () => {
-
-//   try {
-
-//     await axios.delete(
-//       API + "/documents/" +
-//         deleteId,
-//       {
-//         headers: {
-//           Authorization:
-//             "Bearer " +
-//             localStorage.getItem("token"),
-//         },
-//       }
-//     );
-
-//     setDeleteId(null);
-
-//     loadDocs();
-
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-// };
-
 const confirmDelete = async () => {
 
   try {
@@ -317,32 +291,6 @@ const saveVehicle = async () => {
 
 /* ================= SAVE ALL ================= */
 
-// const saveAll = async () => {
-
-//   await saveVehicle();
-
-//   for (let d of docs) {
-
-//     if (d.file) {
-//       await uploadDoc(d);
-//       alert(
-// d.name + " uploaded"
-// );
-
-//     }
-
-//   }
-//  alert("Saved successfully ✅");
-
-//   setEdit(false);
-  
-//   setNewDocs([]);
-
-//   loadVehicle();
-//   loadDocs();
-
-// };
-
 const saveAll = async () => {
 
   try {
@@ -421,11 +369,6 @@ const getFileUrl = (url) => {
     return url;
   }
 
-  // const base =
-  //   import.meta.env.VITE_API.replace("/api", "");
-
-  // return base + "/" + url.replace(/^\/+/, "");
-
   const base =
   (API || "").replace("/api", "");
 
@@ -463,7 +406,6 @@ Edit
 <>
 <button
 className="viewv-btn cancel"
-// onClick={() => setEdit(false)}
 onClick={async () => {
 
   setEdit(false);
@@ -861,53 +803,6 @@ onClick={() => {
 >
 <FaEye />
 </button>
-
-
-{/* <button
-onClick={async () => {
-
-  if (!d.url) return;
-
-  try {
-
-    const res = await fetch(d.url);
-
-    const blob = await res.blob();
-
-    const url =
-      window.URL.createObjectURL(blob);
-
-    const fileName =
-      d.url.split("/").pop();
-
-    const link =
-      document.createElement("a");
-
-    link.href = url;
-
-    link.download =
-      fileName || "file";
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-    window.URL.revokeObjectURL(url);
-
-  } catch (err) {
-
-    console.log(err);
-
-    alert("Download failed");
-
-  }
-
-}}
->
-<FaDownload />
-</button> */}
 
 <button
 onClick={async () => {

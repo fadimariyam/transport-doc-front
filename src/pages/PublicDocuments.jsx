@@ -8,6 +8,10 @@ import axios from "axios";
 export default function PublicDocuments() {
 
   const { text } = useParams();
+  const rawText = text;
+const cleanText = text.includes("scan/")
+  ? text.split("scan/")[1]
+  : text;
 
   const API = import.meta.env.VITE_API || "";
 
@@ -62,8 +66,7 @@ useEffect(() => {
     try {
 
       const res = await axios.get(
-        // API + "/scan/check/" + text
-        `${API}/scan/check/${text}`
+        `${API}/scan/check/${cleanText}`
       );
 
       // APPROVED
@@ -110,8 +113,7 @@ useEffect(() => {
     try {
 
       const res = await axios.get(
-        // API + "/scan/public-docs/" + text
-        `${API}/scan/public-docs/${text}`
+        `${API}/scan/public-docs/${cleanText}`
       );
 
       setDocs(res.data);
