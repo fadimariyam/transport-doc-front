@@ -225,7 +225,7 @@ return (
     )}
 
 
-
+{/* 
     {docs.map((d) => {
 
       const status =
@@ -237,9 +237,6 @@ return (
           key={d.id}
           className="public-doc"
         >
-
-
-          {/* NAME */}
 
           <div className="public-doc-head">
 
@@ -256,10 +253,6 @@ return (
 
           </div>
 
-
-
-          {/* EXPIRY */}
-
           <div className="public-expiry">
 
             Expiry:
@@ -267,18 +260,11 @@ return (
 
           </div>
 
-
-
-          {/* PREVIEW */}
-
-          {/* {d.url?.endsWith(".pdf") ? ( */}
-
           const fileUrl = getFileUrl(d.url);
 
           {fileUrl?.endsWith(".pdf") ? (
 
             <iframe
-              // src={d.url}
               src={fileUrl}
               width="100%"
               height="300"
@@ -287,7 +273,6 @@ return (
           ) : (
 
             <img
-              // src={d.url}
               src={fileUrl}
               className="public-img"
             />
@@ -299,7 +284,65 @@ return (
 
       );
 
-    })}
+    })} */}
+
+    {docs.map((d) => {
+
+  const status = getStatus(d.expiry);
+
+  const fileUrl = getFileUrl(d.url);
+
+  return (
+
+    <div
+      key={d.id}
+      className="public-doc"
+    >
+
+      <div className="public-doc-head">
+
+        <b>{d.name}</b>
+
+        <span
+          className={
+            "status " +
+            status.toLowerCase()
+          }
+        >
+          {status}
+        </span>
+
+      </div>
+
+      <div className="public-expiry">
+
+        Expiry:
+        {d.expiry?.slice(0, 10)}
+
+      </div>
+
+      {fileUrl?.endsWith(".pdf") ? (
+
+        <iframe
+          src={fileUrl}
+          width="100%"
+          height="300"
+        />
+
+      ) : (
+
+        <img
+          src={fileUrl}
+          className="public-img"
+        />
+
+      )}
+
+    </div>
+
+  );
+
+})}
 
 
   </div>
