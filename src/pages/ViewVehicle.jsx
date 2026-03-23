@@ -176,6 +176,14 @@ const changeDoc = (id, field, value) => {
     )
   );
 
+  setNewDocs(
+    newDocs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
+
 };
 
 
