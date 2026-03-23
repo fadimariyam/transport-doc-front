@@ -135,6 +135,18 @@ const addDoc = () => {
 
 /* ================= CHANGE DOC ================= */
 
+// const changeDoc = (id, field, value) => {
+
+//   setDocs(
+//     docs.map(d =>
+//       d.id === id
+//         ? { ...d, [field]: value }
+//         : d
+//     )
+//   );
+
+// };
+
 const changeDoc = (id, field, value) => {
 
   setDocs(
@@ -145,8 +157,15 @@ const changeDoc = (id, field, value) => {
     )
   );
 
-};
+  setNewDocs(
+    newDocs.map(d =>
+      d.id === id
+        ? { ...d, [field]: value }
+        : d
+    )
+  );
 
+};
 
 /* ================= DELETE ================= */
 
@@ -238,25 +257,56 @@ const saveEquipment = async () => {
 
 
 
+// const saveAll = async () => {
+
+//   await saveEquipment();
+
+//   // upload ONLY new docs
+//   for (let d of newDocs) {
+//     if (d.file) {
+//       await uploadDoc(d);
+//     }
+//   }
+
+//   alert("Saved successfully ✅");
+
+//   setEdit(false);
+
+//   setNewDocs([]); // clear temp docs
+
+//   loadEquipment();
+//   loadDocs();
+
+// };
+
 const saveAll = async () => {
 
-  await saveEquipment();
+  try {
 
-  // upload ONLY new docs
-  for (let d of newDocs) {
-    if (d.file) {
-      await uploadDoc(d);
+    await saveEquipment();
+
+    for (let d of newDocs) {
+
+      if (d.file) {
+        await uploadDoc(d);
+      }
+
     }
+
+    setEdit(false);
+    setNewDocs([]);
+
+    await loadEquipment();
+    await loadDocs();
+
+    alert("Saved successfully");
+
+  } catch (err) {
+
+    console.log(err);
+    alert("Save failed");
+
   }
-
-  alert("Saved successfully ✅");
-
-  setEdit(false);
-
-  setNewDocs([]); // clear temp docs
-
-  loadEquipment();
-  loadDocs();
 
 };
 
@@ -297,6 +347,26 @@ const expiredDocs =
   docs.filter(
     d => getStatus(d.expiry) === "Expired"
   ).length;
+
+
+
+
+/*===============GET URL======================= */
+const getFileUrl = (url) => {
+
+  if (!url) return null;
+
+  if (url.startsWith("http")) {
+    return url;
+  }
+
+  const base =
+    import.meta.env.VITE_API.replace("/api", "");
+
+  return base + "/" + url.replace(/^\/+/, "");
+
+};
+
 
 
 /* ================= UI ================= */
@@ -585,10 +655,10 @@ onClick={() => {
     return;
   }
 
-  const fileUrl =
-    d.url.startsWith("http")
-      ? d.url
-      : `${API.replace("/api","")}/${d.url}`;
+  const fileUrl =getFileUrl(d.url);
+    // d.url.startsWith("http")
+    //   ? d.url
+    //   : `${API.replace("/api","")}/${d.url}`;
 
   window.open(fileUrl, "_blank");
 
@@ -597,7 +667,7 @@ onClick={() => {
 <FaEye />
 </button>
 
-<button
+{/* <button
 onClick={() => {
 
   if (!d.url) {
@@ -605,7 +675,7 @@ onClick={() => {
     return;
   }
 
-  const fileUrl =
+  const fileUrl = 
     d.url.startsWith("http")
       ? d.url
       : `${API.replace("/api","")}/${d.url}`;
@@ -615,7 +685,33 @@ onClick={() => {
 }}
 >
 <FaDownload />
+</button> */}
+
+<button
+onClick={() => {
+
+  const fileUrl = getFileUrl(d.url);
+
+  if (!fileUrl) {
+    alert("No file");
+    return;
+  }
+
+  const a = document.createElement("a");
+
+  a.href = fileUrl;
+  a.target = "_blank";
+  a.download = "";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+}}
+>
+<FaDownload />
 </button>
+
 
 {edit && (
 
