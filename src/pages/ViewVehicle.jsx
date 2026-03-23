@@ -73,6 +73,7 @@ const loadVehicle = async () => {
     );
 
     const v = res.data;
+    console.log("QR VALUE =", v.qr);
 
     setForm(v);
 
