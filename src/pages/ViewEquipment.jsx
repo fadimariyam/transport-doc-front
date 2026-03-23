@@ -911,7 +911,7 @@ export default function ViewEquipment() {
 
 const nav = useNavigate();
 const { id } = useParams();
-const API = import.meta.env.VITE_API;
+const API = import.meta.env.VITE_API || "";
 
 /* ================= STATE ================= */
 
@@ -952,7 +952,8 @@ const getFileUrl = (url) => {
     return url;
 
   const base =
-    import.meta.env.VITE_API.replace("/api", "");
+    // import.meta.env.VITE_API.replace("/api", "");
+    (API || "").replace("/api", "")
 
   return base + "/" + url.replace(/^\/+/, "");
 

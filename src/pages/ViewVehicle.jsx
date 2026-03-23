@@ -20,7 +20,7 @@ export default function ViewVehicle() {
 
 const nav = useNavigate();
 const { id } = useParams();
-const API = import.meta.env.VITE_API;
+const API = import.meta.env.VITE_API || "";
 
 /* ================= STATE ================= */
 
@@ -413,7 +413,8 @@ const getFileUrl = (url) => {
   }
 
   const base =
-    import.meta.env.VITE_API.replace("/api", "");
+    // import.meta.env.VITE_API.replace("/api", "");
+    (API || "").replace("/api", "")
 
   return base + "/" + url.replace(/^\/+/, "");
 
