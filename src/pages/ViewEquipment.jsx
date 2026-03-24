@@ -1115,7 +1115,12 @@ const uploadDoc = async (doc) => {
 
 const saveEquipment = async () => {
 
-  const warranty = form.warranty;
+  let warranty = form.warranty;
+
+  // ✅ fix for DATE column
+  if (!warranty || warranty === "") {
+    warranty = null;
+  }
 
   let status = "Normal";
 
@@ -1130,16 +1135,20 @@ const saveEquipment = async () => {
 
   }
 
+  const payload = {
+    name: form.name || "",
+    type: form.type || "",
+    serial: form.serial || "",
+    handled_by: form.handled_by || "",
+    warranty: warranty,   // ✅ null if empty
+    status: status,
+  };
+
+  console.log("PUT payload =", payload);
+
   await axios.put(
     `${API}/equipments/${id}`,
-    {
-      name: form.name,
-      type: form.type,
-      serial: form.serial,
-      handled_by: form.handled_by,
-      warranty: form.warranty,
-      status: status,
-    },
+    payload,
     {
       headers: {
         Authorization:
