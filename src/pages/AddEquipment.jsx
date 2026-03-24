@@ -286,9 +286,10 @@ export default function AddEquipment() {
                 value={form.type}
                 onChange={change}
               >
+              <option value="">Select type</option>
 
                 {types.map((t, i) => (
-                  <option key={i}>
+                  <option key={i} value={t}>
                     {t}
                   </option>
                 ))}

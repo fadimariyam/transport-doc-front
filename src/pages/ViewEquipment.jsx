@@ -1093,26 +1093,6 @@ const uploadDoc = async (doc) => {
 
 /* ================= SAVE ================= */
 
-// const saveEquipment = async () => {
-
-//   await axios.put(
-//     `${API}/equipments/${id}`,
-//   //  form,
-//   {
-//       ...form,
-//       warranty: form.warranty,
-//     },
-//     {
-//       headers: {
-//         Authorization:
-//           "Bearer " +
-//           localStorage.getItem("token"),
-//       },
-//     }
-//   );
-
-// };
-
 const saveEquipment = async () => {
 
   let warranty = form.warranty;
@@ -1634,11 +1614,6 @@ QR CODE
 </div>
 
 <div className="viewv-qr-box">
-
-{/* <img
-className="viewv-qr"
-src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
-/> */}
 
 <img
 className="viewv-qr"
