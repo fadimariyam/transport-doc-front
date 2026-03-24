@@ -1097,7 +1097,11 @@ const saveEquipment = async () => {
 
   await axios.put(
     `${API}/equipments/${id}`,
-    form,
+  //  form,
+  {
+      ...form,
+      warranty: form.warranty,
+    },
     {
       headers: {
         Authorization:
@@ -1313,9 +1317,32 @@ handled_by:e.target.value
 
 </div>
 
-<div>
+{/* <div>
 <span>Warranty</span>
 <b>{form.warranty?.slice(0,10)}</b>
+</div> */}
+<div>
+<span>Warranty</span>
+
+{edit ? (
+
+<input
+type="date"
+value={form.warranty?.slice(0,10) || ""}
+onChange={(e)=>
+setForm({
+...form,
+warranty: e.target.value
+})
+}
+/>
+
+) : (
+
+<b>{form.warranty?.slice(0,10)}</b>
+
+)}
+
 </div>
 
 </div>

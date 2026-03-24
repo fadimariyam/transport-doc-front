@@ -83,7 +83,7 @@ export default function AddEquipment() {
     name: "",
     type: "",
     serial: "",
-    handled: "",
+    handled_by: "",
     warranty: "",
 
   });
@@ -128,7 +128,7 @@ export default function AddEquipment() {
           name: form.name,
           type: form.type,
           serial: form.serial,
-          handled: form.handled,
+          handled_by: form.handled_by,
           warranty: form.warranty,
         },
         {
@@ -267,8 +267,8 @@ export default function AddEquipment() {
             <label>HANDLED BY</label>
 
             <input
-              name="handled"
-              value={form.handled}
+              name="handled_by"
+              value={form.handled_by}
               onChange={change}
             />
 
