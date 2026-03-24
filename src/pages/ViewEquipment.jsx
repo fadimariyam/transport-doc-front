@@ -1651,7 +1651,7 @@ QR CODE
 
 <img
 className="viewv-qr"
-src={`https://api.qrserver.com/e1/create-qr-code/?size=200x200&data=${form.qr}`}
+src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
 />
 
 ) : (
@@ -1715,7 +1715,7 @@ onClick={async () => {
 onClick={() => {
 
   const url =
-    `https://api.qrserver.com/e1/create-qr-code/?size=300x300&data=${form.qr}`;
+    `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
 
   const win = window.open("", "PRINT");
 
