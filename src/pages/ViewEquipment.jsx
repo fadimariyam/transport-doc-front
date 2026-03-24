@@ -1093,14 +1093,52 @@ const uploadDoc = async (doc) => {
 
 /* ================= SAVE ================= */
 
+// const saveEquipment = async () => {
+
+//   await axios.put(
+//     `${API}/equipments/${id}`,
+//   //  form,
+//   {
+//       ...form,
+//       warranty: form.warranty,
+//     },
+//     {
+//       headers: {
+//         Authorization:
+//           "Bearer " +
+//           localStorage.getItem("token"),
+//       },
+//     }
+//   );
+
+// };
+
 const saveEquipment = async () => {
+
+  const warranty = form.warranty;
+
+  let status = "Normal";
+
+  if (warranty) {
+
+    const diff =
+      (new Date(warranty) - Date.now()) /
+      (1000 * 60 * 60 * 24);
+
+    if (diff < 0) status = "Expired";
+    else if (diff < 30) status = "Soon";
+
+  }
 
   await axios.put(
     `${API}/equipments/${id}`,
-  //  form,
-  {
-      ...form,
+    {
+      name: form.name,
+      type: form.type,
+      serial: form.serial,
+      handled_by: form.handled_by,
       warranty: form.warranty,
+      status: status,
     },
     {
       headers: {
