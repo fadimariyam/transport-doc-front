@@ -1601,7 +1601,7 @@ onClick={() => setStatFilter("expired")}
 
 {/* QR */}
 
-<div className="viewv-card">
+{/* <div className="viewv-card">
 
 <div className="viewv-card-header">
 
@@ -1628,13 +1628,130 @@ window.location.origin + "/scan/" + form.qr.split("scan/")[1]
 {form.equipment_id} — {form.name}
 </div>
 
+</div> */}
+
+<div className="viewv-card">
+
+<div className="viewv-card-header">
+
+<div className="viewv-icon">
+🔳
+</div>
+
+<div className="viewv-head">
+QR CODE
 </div>
 
 </div>
 
 
+<div className="viewv-qr-box">
+
+{form.qr ? (
+
+<img
+className="viewv-qr"
+src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${form.qr}`}
+/>
+
+) : (
+
+<div className="viewv-qr">
+QR
 </div>
 
+)}
+
+</div>
+
+
+<div className="viewv-qr-text">
+{form.vehicle_id} — {form.name}
+</div>
+
+
+<div className="viewv-qr-sub">
+Permanent QR • Does not change on edit
+</div>
+
+
+<div className="viewv-qr-actions">
+
+<button className="qr-btn"
+onClick={async () => {
+
+  const url =
+    `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
+
+  const res = await fetch(url);
+
+  const blob = await res.blob();
+
+  const blobUrl =
+    window.URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = blobUrl;
+
+  a.download =
+    form.vehicle_id + ".png";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  window.URL.revokeObjectURL(blobUrl);
+
+}}
+>
+<FaDownload /> Download
+</button>
+
+<button className="qr-btn"
+onClick={() => {
+
+  const url =
+    `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${form.qr}`;
+
+  const win = window.open("", "PRINT");
+
+  win.document.write(`
+    <html>
+      <head>
+        <title>Print QR</title>
+      </head>
+      <body style="text-align:center;">
+        <img src="${url}" />
+        <script>
+          window.onload = function() {
+            window.print();
+            window.close();
+          }
+        </script>
+      </body>
+    </html>
+  `);
+
+  win.document.close();
+
+}}>
+<FaPrint /> Print
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+  
+{/*  */}
 
 {deleteId && (
 
