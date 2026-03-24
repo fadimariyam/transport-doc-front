@@ -1503,7 +1503,7 @@ onClick={() => fileUrl && window.open(fileUrl)}
 <FaEye />
 </button>
 
-<button
+{/* <button
 onClick={() => {
 
 if (!fileUrl) return;
@@ -1515,6 +1515,51 @@ a.target = "_blank";
 a.download = "";
 
 a.click();
+
+}}
+>
+<FaDownload />
+</button> */}
+<button
+onClick={async () => {
+
+  const fileUrl = getFileUrl(d.url);
+
+  if (!fileUrl) {
+    alert("No file");
+    return;
+  }
+
+  try {
+
+    const res = await fetch(fileUrl);
+
+    const blob = await res.blob();
+
+    const url =
+      window.URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+    link.download =
+      d.name || "file";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+
+    console.log(err);
+    alert("Download failed");
+
+  }
 
 }}
 >
