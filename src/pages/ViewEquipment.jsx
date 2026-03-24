@@ -1742,7 +1742,7 @@ onClick={async () => {
   a.href = blobUrl;
 
   a.download =
-    form.equipment_id_id + ".png";
+    form.equipment_id + ".png";
 
   document.body.appendChild(a);
 
