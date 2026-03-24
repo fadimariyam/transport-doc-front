@@ -903,6 +903,7 @@ import {
   FaCheckCircle,
   FaClock,
   FaExclamationTriangle,
+  FaPrint
 } from "react-icons/fa";
 
 import ConfirmModal from "../components/ConfirmModal";
