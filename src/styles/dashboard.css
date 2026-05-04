@@ -657,3 +657,99 @@ tbody tr:hover {
 .page-arrow {
   font-size: 15px;
 }
+
+/* ============================= */
+/* ADD BOX                       */
+/* ============================= */
+
+.add-box {
+  position: relative;
+  display: inline-block;
+}
+
+.add-btn {
+  background: #d17d00;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ============================= */
+/* POPUP DROPDOWN                */
+/* ============================= */
+
+.add-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 180px;
+  width: max-content;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 6px;
+  z-index: 9999;
+  box-sizing: border-box;
+}
+
+/* arrow */
+.add-popup::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 18px;
+  width: 13px;
+  height: 13px;
+  background: white;
+  transform: rotate(45deg);
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
+}
+
+/* each option row */
+.add-popup div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #1f2d36;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.add-popup div:hover {
+  background: #f0f4f4;
+}
+
+.add-popup div svg {
+  font-size: 14px;
+  color: #2c6a73;
+  flex-shrink: 0;
+}
+
+/* ============================= */
+/* MOBILE FIX                    */
+/* ============================= */
+
+@media (max-width: 480px) {
+  .add-popup {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+  }
+
+  .add-popup::before {
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
