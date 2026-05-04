@@ -481,6 +481,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TypeModal from "../components/TypeModal";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 
 export default function AddEquipment() {
@@ -579,12 +580,14 @@ export default function AddEquipment() {
       <div className="breadcrumb">
         <span onClick={() => nav("/dashboard")}>Dashboard »</span>
         <span onClick={() => nav("/equipments")}>Equipments »</span>
-        Add Equipment
+        <span>Add Equipment</span>
       </div>
 
       <hr className="dashed" />
-      <h2 style={{ margin: "12px 0 4px" }}>Add New Equipment</h2>
-      <p style={{ margin: "0 0 10px", color: "#666", fontSize: 13 }}>
+      <h2 style={{ margin: "10px 0 4px", fontSize: "clamp(16px, 4vw, 22px)" }}>
+        Add New Equipment
+      </h2>
+      <p style={{ margin: "0 0 6px", color: "#666", fontSize: 13 }}>
         Fill in the details to register new equipment
       </p>
 
@@ -592,19 +595,20 @@ export default function AddEquipment() {
         <div className="card-title">Equipment Details</div>
 
         <div className="form-grid">
+
           <div className="form-group">
             <label>NAME</label>
-            <input name="name" value={form.name} onChange={change} />
+            <input name="name" value={form.name} onChange={change} placeholder="Equipment name" />
           </div>
 
           <div className="form-group">
             <label>SERIAL</label>
-            <input name="serial" value={form.serial} onChange={change} />
+            <input name="serial" value={form.serial} onChange={change} placeholder="Serial number" />
           </div>
 
           <div className="form-group">
             <label>HANDLED BY</label>
-            <input name="handled_by" value={form.handled_by} onChange={change} />
+            <input name="handled_by" value={form.handled_by} onChange={change} placeholder="Person name" />
           </div>
 
           <div className="form-group">
@@ -613,12 +617,11 @@ export default function AddEquipment() {
               <select name="type" value={form.type} onChange={change}>
                 <option value="">Select type</option>
                 {types.map((t, i) => (
-                  <option key={i} value={t}>
-                    {t}
-                  </option>
+                  <option key={i} value={t}>{t}</option>
                 ))}
               </select>
               <button
+                type="button"
                 className="add-type-btn"
                 onClick={() => setShowModal(true)}
               >
@@ -627,8 +630,9 @@ export default function AddEquipment() {
             </div>
           </div>
 
+          {/* WARRANTY DATE — fixed */}
           <div className="form-group">
-            <label>WARRANTY</label>
+            <label>WARRANTY DATE</label>
             <div className="date-wrapper">
               <DatePicker
                 selected={date}
@@ -637,19 +641,18 @@ export default function AddEquipment() {
                   setForm({ ...form, warranty: d });
                 }}
                 className="date-input"
+                placeholderText="Select date"
+                wrapperClassName="datepicker-full"
               />
               <FaCalendarAlt className="date-icon" />
             </div>
           </div>
+
         </div>
 
         <div className="card-footer">
-          <button className="cancel-btn" onClick={() => nav(-1)}>
-            Cancel
-          </button>
-          <button className="register-btn" onClick={register}>
-            ✓ Register Equipment
-          </button>
+          <button className="cancel-btn" onClick={() => nav(-1)}>Cancel</button>
+          <button className="register-btn" onClick={register}>✓ Register Equipment</button>
         </div>
       </div>
 
@@ -699,7 +702,7 @@ export default function AddEquipment() {
                   className="delete-doc"
                   onClick={() => setDocs(docs.filter((_, x) => x !== i))}
                 >
-                  ✕
+                  ✕ Remove
                 </button>
               </div>
             </div>

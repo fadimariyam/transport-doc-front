@@ -14,3 +14,17 @@ body,
 body {
   overflow-x: hidden;
 }
+
+/* React DatePicker full-width fix */
+.datepicker-full {
+  width: 100% !important;
+  display: block !important;
+}
+
+.datepicker-full .react-datepicker__input-container {
+  width: 100% !important;
+}
+
+.datepicker-full .react-datepicker__input-container input {
+  width: 100% !important;
+}

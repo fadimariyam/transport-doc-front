@@ -372,67 +372,94 @@ hr.dashed {
 }
  */
 
- .add-page {
-  padding: 20px;
+/* ============================= */
+/* PAGE */
+/* ============================= */
+
+.add-page {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .add-page {
+    padding: 12px 10px;
+  }
 }
 
 .add-card {
   background: white;
   border-radius: 14px;
-  padding: 20px;
-  margin-top: 15px;
+  padding: 18px 20px;
+  margin-top: 14px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .add-card {
+    padding: 14px 12px;
+  }
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #225158;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
-/* GRID */
+/* ============================= */
+/* FORM GRID */
+/* ============================= */
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px 32px;
+  gap: 20px 28px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
   .form-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 }
 
+/* ============================= */
 /* FIELD */
+/* ============================= */
 
 .form-group {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group label {
   font-size: 10px;
   letter-spacing: 1px;
   color: #383b42;
-  margin-inline: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  padding-left: 4px;
 }
 
-/* INPUT */
+/* ============================= */
+/* INPUTS — all full width */
+/* ============================= */
 
 .form-group input,
 .form-group select {
   width: 100%;
-  height: 40px;
-  border-radius: 15px;
+  height: 42px;
+  border-radius: 12px;
   border: 1px solid #cfd8dc;
-  padding: 0 16px;
-  margin-bottom: 6px;
+  padding: 0 14px;
   background: #f7f9fa;
   font-size: 13px;
+  box-sizing: border-box;
+  appearance: auto;
 }
 
 .form-group input:focus,
@@ -442,149 +469,102 @@ hr.dashed {
   background: white;
 }
 
+/* ============================= */
 /* TYPE ROW */
+/* ============================= */
 
 .type-row {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
+  width: 100%;
 }
 
 .type-row select {
   flex: 1;
-  margin-bottom: 0;
+  min-width: 0;
 }
 
 .add-type-btn {
   width: 42px;
-  height: 40px;
+  height: 42px;
   border-radius: 10px;
   border: none;
   background: #a6a636;
   color: white;
   cursor: pointer;
   flex-shrink: 0;
-  font-size: 18px;
-}
-
-/* FOOTER */
-
-.card-footer {
+  font-size: 20px;
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.cancel-btn {
-  padding: 8px 20px;
-  border-radius: 10px;
-  border: none;
-  background: #e5e7eb;
-  cursor: pointer;
-}
-
-.register-btn {
-  padding: 8px 20px;
-  border-radius: 10px;
-  border: none;
-  background: #1e6570;
-  color: white;
-  cursor: pointer;
-}
-
-/* ========================= */
-/* MODAL                     */
-/* ========================= */
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 9999;
-  padding: 20px;
-}
-
-.modal-card {
-  width: 100%;
-  max-width: 320px;
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-}
-
-.modal-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.modal-input {
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #cfd8dc;
-  padding: 0 12px;
-  margin-top: 5px;
-  box-sizing: border-box;
-}
-
-.modal-actions {
-  margin-top: 15px;
-  display: flex;
   justify-content: center;
-  gap: 10px;
 }
 
-.btn-cancel {
-  padding: 6px 14px;
-  border-radius: 8px;
-  border: none;
-  background: #e5e7eb;
-  cursor: pointer;
-}
+/* ============================= */
+/* RADIO GROUP */
+/* ============================= */
 
-.btn-save {
-  padding: 6px 14px;
-  border-radius: 8px;
-  border: none;
-  background: #e59400;
-  color: white;
-  cursor: pointer;
-}
-
-.breadcrumb {
-  cursor: pointer;
-  font-size: 13px;
-  color: #555;
-  flex-wrap: wrap;
+.radio-group {
   display: flex;
-  gap: 4px;
+  gap: 20px;
+  align-items: center;
+  padding: 6px 4px;
+  flex-wrap: wrap;
 }
 
-/* DATE */
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  letter-spacing: 0;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.radio-group input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #1e6570;
+}
+
+/* ============================= */
+/* DATE PICKER */
+/* ============================= */
 
 .date-wrapper {
   position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.date-wrapper .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.date-wrapper .react-datepicker__input-container {
   width: 100%;
 }
 
 .date-input {
   width: 100%;
   height: 42px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #cfd8dc;
-  padding: 0 36px 0 16px;
+  padding: 0 40px 0 14px;
   background: #f7f9fa;
   font-size: 13px;
+  box-sizing: border-box;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #2c6a73;
+  background: white;
 }
 
 .date-icon {
@@ -594,31 +574,154 @@ hr.dashed {
   transform: translateY(-50%);
   color: #1e6570;
   pointer-events: none;
+  font-size: 14px;
+  z-index: 1;
 }
 
 .react-datepicker-popper {
   z-index: 9999 !important;
 }
 
-/* CATEGORY RADIO */
+/* ============================= */
+/* FOOTER */
+/* ============================= */
 
-.radio-group {
+.card-footer {
   display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 10px 6px;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
   flex-wrap: wrap;
 }
 
+.cancel-btn {
+  padding: 9px 22px;
+  border-radius: 10px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.register-btn {
+  padding: 9px 22px;
+  border-radius: 10px;
+  border: none;
+  background: #1e6570;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ============================= */
+/* MODAL */
+/* ============================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 320px;
+  background: white;
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1e3a3a;
+}
+
+.modal-input {
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #cfd8dc;
+  padding: 0 14px;
+  margin-top: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.modal-input:focus {
+  outline: none;
+  border-color: #2c6a73;
+}
+
+.modal-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancel {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-save {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #e59400;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ============================= */
+/* BREADCRUMB */
+/* ============================= */
+
+.breadcrumb {
+  cursor: pointer;
+  font-size: 12px;
+  color: #555;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+hr.dashed {
+  border: none;
+  border-top: 2px dashed #9ab356;
+  margin: 12px 0;
+}
+
+/* ============================= */
 /* DOCUMENT UPLOAD */
+/* ============================= */
 
 .doc-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 14px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
   .doc-list {
     grid-template-columns: 1fr;
   }
@@ -627,63 +730,78 @@ hr.dashed {
 .doc-card {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  padding: 14px;
-  background: white;
+  padding: 14px 12px;
+  background: #fafafa;
+  box-sizing: border-box;
 }
 
 .doc-head {
   font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: #333;
 }
 
 .doc-row {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .doc-field {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
 }
 
 .doc-field label {
-  font-size: 11px;
+  font-size: 10px;
+  letter-spacing: 1px;
   color: #555;
-  display: block;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
-.doc-field input {
+.doc-field input[type="text"],
+.doc-field input[type="date"],
+.doc-field input:not([type="file"]) {
   width: 100%;
-  padding: 6px 10px;
+  height: 38px;
   border-radius: 8px;
   border: 1px solid #cfd8dc;
+  padding: 0 12px;
   font-size: 13px;
+  background: #f7f9fa;
+  box-sizing: border-box;
+}
+
+.doc-field input[type="file"] {
+  width: 100%;
+  font-size: 12px;
+  padding: 6px 0;
+  cursor: pointer;
 }
 
 .delete-doc {
-  width: 35px;
-  height: 30px;
+  align-self: flex-start;
+  padding: 6px 12px;
   border-radius: 8px;
   border: none;
   background: #f87171;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 .save-doc {
+  grid-column: 1 / -1;
   width: 100%;
-  margin-top: 10px;
-  height: 36px;
+  margin-top: 6px;
+  height: 38px;
   border-radius: 8px;
   border: none;
   background: #848617;
   color: white;
   cursor: pointer;
-  grid-column: 1 / -1;
-}
-
-hr.dashed {
-  border: none;
-  border-top: 3px dashed #9ab356;
-  margin: 12px 0;
+  font-size: 13px;
 }

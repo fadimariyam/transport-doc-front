@@ -598,6 +598,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TypeModal from "../components/TypeModal";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 
 export default function AddVehicle() {
@@ -704,39 +705,44 @@ export default function AddVehicle() {
       <div className="breadcrumb">
         <span onClick={() => nav("/dashboard")}>Dashboard »</span>
         <span onClick={() => nav("/vehicles")}>Vehicles »</span>
-        Add Vehicle
+        <span>Add Vehicle</span>
       </div>
 
       <hr className="dashed" />
-      <h2 style={{ margin: "12px 0 4px" }}>Add New Vehicle</h2>
-      <p style={{ margin: "0 0 10px", color: "#666", fontSize: 13 }}>
+      <h2 style={{ margin: "10px 0 4px", fontSize: "clamp(16px, 4vw, 22px)" }}>
+        Add New Vehicle
+      </h2>
+      <p style={{ margin: "0 0 6px", color: "#666", fontSize: 13 }}>
         Fill in the details to register a new vehicle
       </p>
 
+      {/* DETAILS CARD */}
       <div className="add-card">
         <div className="card-title">Vehicle Details</div>
 
         <div className="form-grid">
+
           <div className="form-group">
             <label>BRAND NAME</label>
-            <input name="brand" value={form.brand} onChange={change} />
+            <input name="brand" value={form.brand} onChange={change} placeholder="e.g. Toyota" />
           </div>
 
           <div className="form-group">
             <label>VEHICLE NAME</label>
-            <input name="name" value={form.name} onChange={change} />
+            <input name="name" value={form.name} onChange={change} placeholder="e.g. Land Cruiser" />
           </div>
 
           <div className="form-group">
             <label>PLATE NUMBER</label>
-            <input name="plate" value={form.plate} onChange={change} />
+            <input name="plate" value={form.plate} onChange={change} placeholder="e.g. AB-1234" />
           </div>
 
           <div className="form-group">
             <label>OWNER</label>
-            <input name="owner" value={form.owner} onChange={change} />
+            <input name="owner" value={form.owner} onChange={change} placeholder="Owner name" />
           </div>
 
+          {/* CATEGORY */}
           <div className="form-group">
             <label>CATEGORY</label>
             <div className="radio-group">
@@ -748,7 +754,7 @@ export default function AddVehicle() {
                   checked={form.category === "Fixed"}
                   onChange={change}
                 />
-                {" "}Fixed
+                Fixed
               </label>
               <label>
                 <input
@@ -758,20 +764,19 @@ export default function AddVehicle() {
                   checked={form.category === "Common"}
                   onChange={change}
                 />
-                {" "}Common
+                Common
               </label>
             </div>
           </div>
 
+          {/* TYPE */}
           <div className="form-group">
             <label>TYPE</label>
             <div className="type-row">
               <select name="type" value={form.type} onChange={change}>
                 <option value="">Select Type</option>
                 {types.map((t, i) => (
-                  <option key={i} value={t}>
-                    {t}
-                  </option>
+                  <option key={i} value={t}>{t}</option>
                 ))}
               </select>
               <button
@@ -786,43 +791,61 @@ export default function AddVehicle() {
 
           <div className="form-group">
             <label>CURRENT KM</label>
-            <input name="current_km" value={form.current_km} onChange={change} />
+            <input
+              name="current_km"
+              type="number"
+              value={form.current_km}
+              onChange={change}
+              placeholder="0"
+            />
           </div>
 
           <div className="form-group">
             <label>LAST OIL KM</label>
-            <input name="last_oil" value={form.last_oil} onChange={change} />
+            <input
+              name="last_oil"
+              type="number"
+              value={form.last_oil}
+              onChange={change}
+              placeholder="0"
+            />
           </div>
 
           <div className="form-group">
-            <label>OIL INTERVAL</label>
-            <input name="interval" value={form.interval} onChange={change} />
+            <label>OIL INTERVAL (KM)</label>
+            <input
+              name="interval"
+              type="number"
+              value={form.interval}
+              onChange={change}
+              placeholder="3000"
+            />
           </div>
 
+          {/* DATE PICKER — fixed */}
           <div className="form-group">
             <label>NEXT OIL DATE</label>
             <div className="date-wrapper">
               <DatePicker
                 selected={date}
-                onChange={setDate}
+                onChange={(d) => setDate(d)}
                 className="date-input"
+                placeholderText="Select date"
+                wrapperClassName="datepicker-full"
               />
               <FaCalendarAlt className="date-icon" />
             </div>
           </div>
+
         </div>
 
         <div className="card-footer">
-          <button className="cancel-btn" onClick={() => nav(-1)}>
-            Cancel
-          </button>
-          <button className="register-btn" onClick={register}>
-            ✓ Register Vehicle
-          </button>
+          <button className="cancel-btn" onClick={() => nav(-1)}>Cancel</button>
+          <button className="register-btn" onClick={register}>✓ Register Vehicle</button>
         </div>
       </div>
 
-      {/* DOCUMENTS */}
+      {/* DOCUMENTS CARD */}
       <div className="add-card">
         <div className="card-title">Document Upload</div>
         <div className="doc-list">
@@ -868,7 +891,7 @@ export default function AddVehicle() {
                   className="delete-doc"
                   onClick={() => setDocs(docs.filter((_, x) => x !== i))}
                 >
-                  ✕
+                  ✕ Remove
                 </button>
               </div>
             </div>
@@ -881,10 +904,7 @@ export default function AddVehicle() {
       </div>
 
       {showModal && (
-        <TypeModal
-          close={() => setShowModal(false)}
-          addType={addType}
-        />
+        <TypeModal close={() => setShowModal(false)} addType={addType} />
       )}
     </div>
   );
