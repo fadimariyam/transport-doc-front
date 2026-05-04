@@ -35,11 +35,16 @@ export default function Login() {
 
       nav("/dashboard");
 
-    } catch {
+    } 
+    // catch {
 
-      alert("Login failed");
+    //   alert("Login failed");
 
-    }
+    // }
+    catch (err) {
+  console.log("ERROR:", err.response);
+  alert(err.response?.data?.message || "Login failed");
+}
 
   };
 
