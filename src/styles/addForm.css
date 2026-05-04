@@ -719,13 +719,20 @@ hr.dashed {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
   .doc-list {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
+
+/* ============================= */
+/* SINGLE DOC CARD               */
+/* ============================= */
 
 .doc-card {
   border: 1px solid #e5e7eb;
@@ -733,6 +740,11 @@ hr.dashed {
   padding: 14px 12px;
   background: #fafafa;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .doc-head {
@@ -745,26 +757,43 @@ hr.dashed {
 .doc-row {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  width: 100%;
+  min-width: 0;
 }
+
+/* ============================= */
+/* FIELD                         */
+/* ============================= */
 
 .doc-field {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  gap: 5px;
+  margin-bottom: 12px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .doc-field label {
   font-size: 10px;
   letter-spacing: 1px;
+  text-transform: uppercase;
   color: #555;
-  margin-bottom: 5px;
+  display: block;
 }
 
-.doc-field input[type="text"],
-.doc-field input[type="date"],
-.doc-field input:not([type="file"]) {
+/* ============================= */
+/* ALL INPUTS — base             */
+/* ============================= */
+
+.doc-field input,
+.doc-field select {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   height: 38px;
   border-radius: 8px;
   border: 1px solid #cfd8dc;
@@ -772,31 +801,85 @@ hr.dashed {
   font-size: 13px;
   background: #f7f9fa;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.doc-field input[type="file"] {
-  width: 100%;
-  font-size: 12px;
-  padding: 6px 0;
-  cursor: pointer;
+.doc-field input:focus,
+.doc-field select:focus {
+  outline: none;
+  border-color: #2c6a73;
+  background: white;
 }
+
+/* ============================= */
+/* DATE INPUT — mobile fix       */
+/* ============================= */
+
+.doc-field input[type="date"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #cfd8dc;
+  padding: 0 8px;
+  font-size: 12px;
+  background: #f7f9fa;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-field input[type="date"]:focus {
+  outline: none;
+  border-color: #2c6a73;
+  background: white;
+}
+
+/* ============================= */
+/* FILE INPUT                    */
+/* ============================= */
+
+.doc-field input[type="file"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  padding: 6px 0;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+/* ============================= */
+/* BUTTONS                       */
+/* ============================= */
 
 .delete-doc {
   align-self: flex-start;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 8px;
   border: none;
   background: #f87171;
   color: white;
   cursor: pointer;
   font-size: 12px;
-  margin-top: 4px;
+  margin-top: 2px;
+  white-space: nowrap;
 }
 
 .save-doc {
   grid-column: 1 / -1;
   width: 100%;
-  margin-top: 6px;
+  margin-top: 4px;
   height: 38px;
   border-radius: 8px;
   border: none;
